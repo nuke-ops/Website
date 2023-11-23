@@ -8,3 +8,6 @@
 
 # py
 __pycache__/
+
+# app
+config.json
