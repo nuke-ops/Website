@@ -1,13 +1,10 @@
-# Ignore folders
-test/
-cgi/
+# vsc
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# py
 __pycache__/
-.idea/
-
-# Ignore extensions
-*.tmp
-*.bak
-
-# Ignore files
-dice/data/*
-dice/upload/.htaccess
