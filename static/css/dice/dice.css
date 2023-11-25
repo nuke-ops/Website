@@ -1,0 +1,84 @@
+::-webkit-scrollbar {
+	width: 0.5em;
+	background: #1F1B24;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 100vw;
+	margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #00E090;
+	border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #3E8ED0;
+}
+
+::-webkit-scrollbar-thumb:active {
+	background: #7A9AB9;
+}
+
+body {
+	background: #1F1B24;
+	margin-top: 10px !important;
+}
+
+.container {
+	display: grid;
+	grid-auto-columns: 1fr;
+	gap: 0px 1%;
+	grid-template-areas:
+		"Top-left Top Top-right"
+		"Middle Middle Right"
+		"Bottom Bottom Bottom-right";
+}
+
+.Top-left {
+	grid-area: Top-left;
+}
+
+.Top-right {
+	grid-area: Top-right;
+}
+
+.Top {
+	grid-area: Top;
+}
+
+.Bottom {
+	grid-area: Bottom;
+}
+
+.Bottom-right {
+	grid-area: Bottom-right;
+}
+
+.Middle {
+	grid-area: Middle;
+}
+
+.Right {
+	grid-area: Right;
+}
+
+tr:hover {
+	background-color: rgba(0, 0, 0, 0.100) !important;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+.presetButton {
+	margin-left: 0.5%;
+	margin-right: 0.5%;
+	left: -3.5%;
+}
+
+th:nth-child(n),
+td:nth-child(n) {
+	border-color: #00D1B2;
+}

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Python: run main.py",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "GEVENT_SUPPORT": "True"
+            }
+        },
+    ]
+}
