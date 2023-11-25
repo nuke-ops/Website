@@ -33,29 +33,19 @@ def main_ss13_rules():
 #
 # Errors
 #
-@app.errorhandler(400)
-def bad_request(error):
-    return render_template("error/400.html")
+@app.errorhandler(Exception)
+def handle_error(error):
+    error = getattr(error, "code", 500)
+    if error == 400:
+        return render_template("error.html", error_code=f"{error} - BAD REQUEST")
+    elif error == 401:
+        return render_template("error.html", error_code=f"{error} - AUTH REQUIRED")
+    elif error == 403:
+        return render_template("error.html", error_code=f"{error} - PAGE FORBIDDEN")
+    elif error == 404:
+        return render_template("error.html", error_code=f"{error} - PAGE NOT FOUND")
 
-
-@app.errorhandler(401)
-def unauthorized(error):
-    return render_template("error/401.html")
-
-
-@app.errorhandler(403)
-def forbidden(error):
-    return render_template("error/403.html")
-
-
-@app.errorhandler(404)
-def not_found(error):
-    return render_template("error/404.html")
-
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    return render_template("error/500.html")
+    return render_template("error.html", error_code=f"{error} - UNKNOWN ERROR")
 
 
 ##
@@ -142,4 +132,4 @@ def sitemap():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=False)
+    socketio.run(app, debug=True)
