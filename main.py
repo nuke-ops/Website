@@ -15,17 +15,17 @@ socketio = SocketIO(app)
 ##
 ## Main
 ##
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def main():
     return render_template("main/main.html")
 
 
-@app.route("/ss13", methods=["GET", "POST"])
+@app.route("/ss13")
 def main_ss13():
     return render_template("main/ss13.html")
 
 
-@app.route("/ss13/rules", methods=["GET", "POST"])
+@app.route("/ss13/rules")
 def main_ss13_rules():
     return render_template("main/rules.html")
 
@@ -132,4 +132,4 @@ def sitemap():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=False)
