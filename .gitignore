@@ -8,6 +8,7 @@
 
 # py
 __pycache__/
+.venv/
 
 # app
 config.json
