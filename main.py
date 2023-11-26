@@ -9,7 +9,10 @@ with open("config.json") as config:
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = conf["secret_key"]
-socketio = SocketIO(app)
+socketio = SocketIO(
+    app,
+    cors_allowed_origins=["http://localhost:8000", "https://nukeops.com"],
+)
 
 
 ##
@@ -132,4 +135,4 @@ def sitemap():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=False)
+    socketio.run(app, debug=True, port=8000)
