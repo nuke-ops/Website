@@ -11,7 +11,11 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = conf["secret_key"]
 socketio = SocketIO(
     app,
-    cors_allowed_origins=["http://localhost:8000", "https://nukeops.com"],
+    cors_allowed_origins=[
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "https://nukeops.com",
+    ],
 )
 
 
