@@ -1,8 +1,11 @@
+import re
 from flask_socketio import SocketIO
 from flask import Flask, jsonify, render_template, request, send_from_directory
+from sqlalchemy import inspect
 from database import db_session
 from models import Dice
 import json
+from modules import Validate
 
 with open("config.json") as config:
     conf = json.loads(config.read())
@@ -61,7 +64,6 @@ def handle_error(error):
 @app.route("/dice")
 def dice():
     fetch_dice_records = Dice.query.order_by(Dice.date.desc()).limit(10).all()
-
     dice_records = [
         {
             "name": record.name,
@@ -78,10 +80,47 @@ def dice():
     return render_template("dice/dice.html", dice_records=dice_records)
 
 
+def valid_dice(data) -> bool:
+    try:
+        for key, value in data.items():
+            print(key, value, type(value))
+            # check if ints are ints
+            if key in ["dice", "sides", "sum"] and type(value) != int:
+                return False
+
+            if type(value) == str:
+                # check the pattern "{mod}({+/-}{number})"
+                if key == "modifier":
+                    if (
+                        not re.match(r"^(str|int|dex|con|wis|cha)\([+-]\d+\)$", value)
+                        and value != ""
+                    ):
+                        return False
+
+                # pass only numbers and ,
+                if key == "throws":
+                    if not re.match(r"^[0-9, ]+$", value):
+                        return False
+
+                # pass only alphanumeric
+                if not re.match(r"^[0-9a-zA-Z,+\- ]+$", value) and key not in [
+                    "modifier",
+                    "throws",
+                ]:
+                    return False
+        return True
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+
 @app.route("/api/insert_dice_roll", methods=["POST"])
 def insert_dice_roll():
     try:
         data = request.get_json()
+
+        if not valid_dice(data):
+            return jsonify({"error": "Invalid dice data"}), 500
 
         new_dice_roll = Dice(
             name=data.get("name"),
