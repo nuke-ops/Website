@@ -61,11 +61,18 @@ def insert_dice_roll():
             sum=data.get("sum"),
             modifier=data.get("modifier"),
         )
-
         db_session.add(new_dice_roll)
         db_session.commit()
         socketio.emit("dice_table_update")
-        return jsonify({"message": "Dice roll recorded successfully"}), 201
+        return (
+            jsonify(
+                {
+                    "message": "Dice roll recorded successfully",
+                    "timestamp": new_dice_roll.date.strftime("%d/%m/%Y %H:%M:%S"),
+                }
+            ),
+            201,
+        )
 
     except Exception as e:
         print(f"Error: {e}")
