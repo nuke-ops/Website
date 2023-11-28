@@ -1,49 +1,44 @@
 
 // cookies
 
-$(function () { getCookies() }); // load cookies on page load
+$(function () { load_cookies() }); // load cookies on page load
 
 function deleteAllCookies() {
     startLoading("#clearButton");
-    Cookies.remove('name');
-    Cookies.remove('cus');
-    Cookies.remove('str');
-    Cookies.remove('dex');
-    Cookies.remove('con');
-    Cookies.remove('int');
-    Cookies.remove('wis');
-    Cookies.remove('cha');
-    Cookies.remove('dark');
+    let saved_cookies = ["name", "cus", "str", "dex", "con", "int", "wis", "cha", "dark_theme"];
+    for (cookie of saved_cookies) {
+        Cookies.remove(cookie);
+    }
     stopLoading("#clearButton");
 }
 
-function setCookies() {
+function save_cookies() {
     Cookies.set('name', $("#name").val());
-    Cookies.set('cus', $("#cus_input").val());
-    Cookies.set('str', $("#str_input").val());
-    Cookies.set('dex', $("#dex_input").val());
-    Cookies.set('con', $("#con_input").val());
-    Cookies.set('int', $("#int_input").val());
-    Cookies.set('wis', $("#wis_input").val());
-    Cookies.set('cha', $("#cha_input").val());
+
     if ($('#dark-mode_button').is(":checked")) {
-        Cookies.set('dark', true);
+        Cookies.set('dark_theme', true);
     }
     else {
-        Cookies.set('dark', false);
+        Cookies.set('dark_theme', false);
     }
+
+    let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
+    for (mod of modifiers) {
+        Cookies.set(mod, $("#" + mod + "_input").val());
+    }
+
+
 }
 
-function getCookies() {
+function load_cookies() {
     $("#name").attr("value", Cookies.get("name"));
-    $("#cus_input").attr("value", Cookies.get("cus"));
-    $("#str_input").attr("value", Cookies.get("str"));
-    $("#dex_input").attr("value", Cookies.get("dex"));
-    $("#con_input").attr("value", Cookies.get("con"));
-    $("#int_input").attr("value", Cookies.get("int"));
-    $("#wis_input").attr("value", Cookies.get("wis"));
-    $("#cha_input").attr("value", Cookies.get("cha"));
-    $("#dark-mode_button")[0].checked = (Cookies.get("dark") === 'true');
+
+    $("#dark-mode_button")[0].checked = (Cookies.get("dark_theme") === 'true');
+
+    let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
+    for (mod of modifiers) {
+        $("#" + mod + "_input").attr("value", Cookies.get(mod));
+    }
 }
 
 // socket
@@ -81,8 +76,8 @@ function updateTable() {
                     <td>${record.dice}</td>
                     <td>${record.sides}</td>
                     <td>${record.throws}</td>
-                    <td>${record.sum}</td>
                     <td>${record.modifier}</td>
+                    <td>${record.sum}</td>
                     <td>${record.date}</td>
                 `;
             });
@@ -96,31 +91,31 @@ function sendDiceRoll() {
 
     // form values
     let name = form.elements["name"].value;
-    let dice = form.elements["dice"].value;
-    let sides = form.elements["sides"].value;
+    let dice = parseInt(form.elements["dice"].value);
+    let sides = parseInt(form.elements["sides"].value);
     // Error handlers
     const formErrors = new Array();
     // name
-    if (!name) { // No name
+    if (!name) {
         formErrors.push("You must enter a name");
     }
-    else if (!alphanumeric(name)) { // Illegal characters
+    else if (!alphanumeric(name)) {
         formErrors.push("Illegal characters in name");
     }
-    else if (name.length >= 35) { // name to long
+    else if (name.length > 35) {
         formErrors.push("Name length limit: 35");
     }
     //dice
-    if (dice > 50) { // Too many dice
+    if (dice > 50) {
         formErrors.push("Max amount of dice: 50");
     }
-    if (sides > 100) { // Too many sides
+    if (sides > 100) {
         formErrors.push("Max amount of sides: 100");
     }
-    if (dice < 1 || !dice) { // Negative dice
+    if (dice < 1 || !dice) {
         formErrors.push("There must be at leas one dice");
     }
-    if (sides < 2 || !sides) { // Negative sides
+    if (sides <= 1 || !sides) {
         formErrors.push("Dice must have at least 2 sides");
     }
     if (formErrors.length > 0) {
@@ -136,8 +131,8 @@ function sendDiceRoll() {
         let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
         for (mod of modifiers) {
             if ($("input[id='" + mod + "_radio']:checked").val()) {  // if radio button is checked
-                raw_modifier = $("#" + mod + "_input").val();           // add it's value to roll
-                // assemble string eg. str(+5)
+                raw_modifier = $("#" + mod + "_input").val(); //^ add it's value to roll
+                // assemble string eg. str(+2)
                 modifier = mod + "(";
                 if (raw_modifier > 0) {
                     modifier += "+"
@@ -148,14 +143,15 @@ function sendDiceRoll() {
     }
 
     // roll
-    let throws = [];
+    let roll = [];
     for (let i = 1; i <= dice; i++) {
-        throws.push(Math.floor((Math.random() * sides) + 1));
+        roll.push(Math.floor((Math.random() * sides) + 1));
     }
+    let throws = roll.join(", ")
 
     // sum
     let sum = 0;
-    for (const x of throws) {
+    for (const x of roll) {
         sum += x;
     } sum += raw_modifier * 1;
 
@@ -167,21 +163,29 @@ function sendDiceRoll() {
         sum: sum,
         modifier: modifier
     };
-    socket.send(JSON.stringify(diceRollData));
-    $.ajax({
-        type: "POST",
-        url: "/api/insert_dice_roll",
-        contentType: "application/json",
-        data: JSON.stringify({
-            name: name,
-            dice: dice,
-            sides: sides,
-            throws: throws,
-            sum: sum,
-            modifier: modifier
-        }),
+    console.log(diceRollData)
+    fetch('/api/insert_dice_roll', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(diceRollData),
     })
-    stopLoading("#formSubmit");
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            stopLoading("#formSubmit");
+        });
 }
 
 // rest of the stuff
@@ -200,7 +204,7 @@ function hideProgressBar() {
 
 
 function alphanumeric(inputtxt) {
-    var letterNumber = /^[0-9a-zA-Z ]+$/;
+    const letterNumber = /^[0-9a-zA-Z ]+$/;
     if (inputtxt.match(letterNumber)) {
         return true;
     } else {
@@ -237,15 +241,17 @@ function calc() {
         }
         let output = math.evaluate(input)
         $("#calculator_input").val(output);
-        stopLoading("#calculator_button");
-    } catch (error) {
+    }
+    catch (error) {
         $("#calculator_input").val("");
         $("#calculator_input").attr("placeholder", "Invalid input");
+    }
+    finally {
         stopLoading("#calculator_button");
     }
 }
 
-function set_dice(dice, sides) {
+function set_dice_values(dice, sides) {
     $("#dice").val(dice);
     $("#sides").val(sides);
 }

@@ -1,0 +1,14 @@
+{% extends "main/head.html" %}
+{% block title %} SS13 {% endblock %}
+{% block content %}
+
+<div class="button-grid">
+    <a href="{{ url_for('main') }}">
+        <button class="redirect-button" id="neon"><i>BACK</i></button></a>
+    <a href="{{ url_for('main_ss13_rules') }}"> <button id="neon"><i>RULES</i></button></a>
+    <a href="byond://nukeops.com:1337"> <button id="neon"><i>SERVER</i></button></a>
+    <!-- <a href="https://nukeops.com/ss13/wiki"> <button id="neon"><i>WIKI</i></button></a> -->
+    <a href="https://github.com/nuke-ops/Nostra-13"><button id="neon"><i>GITHUB</i></button></a>
+    <!-- <a href="stats/stats.html"><button id="neon"><i>STATS</i></button> </a> -->
+</div>
+{% endblock %}

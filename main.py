@@ -1,4 +1,6 @@
+import json
 import logging
+import re
 from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, logger
@@ -46,7 +48,22 @@ connected_clients: list[WebSocket] = []
 
 @app.get("/")
 async def main(request: Request):
-    return FileResponse("static/pages/main.html")
+    return templates.TemplateResponse("main/main.html", {"request": request})
+
+
+@app.get("/ss13")
+async def main_ss13(request: Request):
+    return templates.TemplateResponse("main/ss13.html", {"request": request})
+
+
+@app.get("/ss13/rules")
+async def main_ss13_rules(request: Request):
+    return templates.TemplateResponse("main/rules.html", {"request": request})
+
+
+##
+## Others
+##
 
 
 @app.get("/robots.txt")
@@ -64,34 +81,25 @@ async def sitemapXml(request: Request):
 #
 
 
-@app.exception_handler(400)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/400.html")
+@app.exception_handler(Exception)
+async def handle_error(request: Request, exc: Exception):
+    error_code = getattr(exc, "code", 500)
+    error_detail = None
 
+    if error_code == 400:
+        error_detail = f"{error_code} - BAD REQUEST"
+    elif error_code == 401:
+        error_detail = f"{error_code} - AUTH REQUIRED"
+    elif error_code == 403:
+        error_detail = f"{error_code} - PAGE FORBIDDEN"
+    elif error_code == 404:
+        error_detail = f"{error_code} - PAGE NOT FOUND"
 
-@app.exception_handler(401)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/401.html")
-
-
-@app.exception_handler(403)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/403.html")
-
-
-@app.exception_handler(404)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/404.html")
-
-
-@app.exception_handler(500)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/500.html")
-
-
-@app.exception_handler(503)
-async def custom_404_handler(_, __):
-    return FileResponse("static/pages/error/503.html")
+    return templates.TemplateResponse(
+        "error.html",
+        {"request": request, "error_code": error_detail},
+        status_code=error_code,
+    )
 
 
 ##
@@ -103,7 +111,7 @@ async def custom_404_handler(_, __):
 async def dice(request: Request, db: Session = Depends(get_db)):
     dice_records = db.query(models.Dice).order_by(desc(models.Dice.id)).limit(10).all()
     return templates.TemplateResponse(
-        "dice.html",
+        "dice/dice.html",
         {
             "request": request,
             "dice_records": dice_records,
@@ -128,15 +136,54 @@ class DiceCreate(BaseModel):
     name: str
     dice: int
     sides: int
-    throws: List[int]
+    throws: str
     sum: int
     modifier: Optional[str]
+
+
+def dice_data_validation(data) -> None:
+    try:
+        for key, value in json.loads(data).items():
+            # check if ints are ints
+            if key in ["dice", "sides", "sum"] and type(value) != int:
+                raise InvalidDiceFormatError()
+
+            if type(value) == str:
+                # check the pattern "{mod}({+/-}{number})"
+                if key == "modifier":
+                    if (
+                        not re.match(r"^(str|int|dex|con|wis|cha)\([+-]\d+\)$", value)
+                        and value != ""
+                    ):
+                        raise InvalidDiceFormatError()
+
+                # pass only numbers and ,
+                if key == "throws":
+                    if not re.match(r"^[0-9, ]+$", value):
+                        raise InvalidDiceFormatError()
+
+                # pass only alphanumeric
+                if not re.match(r"^[0-9a-zA-Z,+\- ]+$", value) and key not in [
+                    "modifier",
+                    "throws",
+                ]:
+                    raise InvalidDiceFormatError()
+    except Exception as e:
+        print(f"Error: {e}")
+        raise InvalidDiceFormatError()
+
+
+class InvalidDiceFormatError(Exception):
+    def __init__(self, message="Invalid dice format"):
+        self.message = message
+        super().__init__(self.message)
 
 
 @app.post("/api/insert_dice_roll")
 async def insert_dice_roll(data: DiceCreate, db: Session = Depends(get_db)):
     try:
-        db_dice = models.Dice(**data.dict())
+        dice_data_validation(data.model_dump_json())
+        db_dice = models.Dice(**data.model_dump())
         db.add(db_dice)
         db.commit()
         db.refresh(db_dice)
@@ -145,11 +192,11 @@ async def insert_dice_roll(data: DiceCreate, db: Session = Depends(get_db)):
             await client.send_text("update")
 
         return db_dice
+    except InvalidDiceFormatError as e:
+        raise HTTPException(status_code=422, detail="Invalid dice format")
     except ValidationError as e:
-        logger.error(f"Validation error: {e}")
         raise HTTPException(status_code=422, detail=e.errors())
     except Exception as e:
-        logger.error(f"Unexpected error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 

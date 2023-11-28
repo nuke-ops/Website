@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 body {
-  background-color: #4B0000
+  background-color: #2e0000;
+  background-image: none;
 }
 
 div {
@@ -11,29 +12,30 @@ div {
 
 dd {
   font-size: 0.875em;
-  font-family: 'Roboto',sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #ef3129;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 
 dt {
   font-size: 1em;
-  font-family: 'Open Sans',sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #C50000;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 
 button {
-  width: 25%;
+  width: 5%;
   height: 40px;
-  margin: 5px;
   border: solid white 2px;
   border-radius: 5px;
   background-color: transparent;
   color: white;
   font-size: 30px;
   overflow: hidden;
-  font-family: joystixmonospace
+  font-family: joystixmonospace;
+  font-size: min(max(0px, 3.5vw), 100%);
+
 }
 
 li {
@@ -118,4 +120,4 @@ button:hover {
   height: 50px;
   left: 20px;
   top: 50px;
-  
+}

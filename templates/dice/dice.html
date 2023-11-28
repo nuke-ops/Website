@@ -9,12 +9,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
-    <script src="{{ url_for('static', path='js/math.js') }}"></script>
     <script>
         const socketBaseUrl = "{{ socket_base_url }}";
     </script>
     <script src="{{ url_for('static', path='js/dice.js') }}"></script>
-    <!-- <script src="https://nukeops.com/dice/js/client_dice.js"></script> -->
+    <script src="{{ url_for('static', path='js/math.js') }}"></script>
     <script src="{{ url_for('static', path='js/nukeops.js') }}"></script>
     <script>$(function () { dark_mode(); });</script>
 
@@ -37,11 +36,8 @@
                         <input id="name" class="input is-primary" type="text" placeholder="Name">
                     </div>
                     <div class="control">
-                        <!-- <button id="formSubmit" class="button is-primary" type="submit"
-                            onclick="sendDiceRoll();setCookies();getCookies();">Roll &nbsp;<i
-                                class="fa-solid fa-dice-d20"></i></button> -->
                         <button id="formSubmit" class="button is-primary" type="submit"
-                            onclick="sendDiceRoll();setCookies();getCookies();">
+                            onclick="sendDiceRoll();save_cookies();">
                             Roll &nbsp;<i class="fa-solid fa-dice-d20"></i>
                         </button>
                     </div>
@@ -56,19 +52,19 @@
 
                 <div class="field has-addons">
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,20);">1d20</button>
+                        onclick="set_dice_values(1,20);">1d20</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,4);">1d4</button>
+                        onclick="set_dice_values(1,4);">1d4</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,6);">1d6</button>
+                        onclick="set_dice_values(1,6);">1d6</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,8);">1d8</button>
+                        onclick="set_dice_values(1,8);">1d8</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,10);">1d10</button>
+                        onclick="set_dice_values(1,10);">1d10</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,12);">1d12</button>
+                        onclick="set_dice_values(1,12);">1d12</button>
                     <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice(1,100);">1d100</button>
+                        onclick="set_dice_values(1,100);">1d100</button>
                 </div>
 
             </form>
@@ -81,7 +77,6 @@
 
         <!-- TOP RIGHT BOX -->
         <div class="Top-right">
-            <!-- <iframe id="iframe_mbs" src="./mbs/index.html" style="height: 95%;width: 100%;border:none;"></iframe> -->
         </div>
 
         <!-- TOP BOX -->
@@ -126,7 +121,7 @@
                 &nbsp;&nbsp;
                 <label id="dark-mode_label" class="button is-medium is-dark is-outlined"><i
                         class="fa-solid fa-circle-half-stroke"></i>
-                    <input id="dark-mode_button" type="checkbox" onclick="dark_mode();setCookies();getCookies();">
+                    <input id="dark-mode_button" type="checkbox" onclick="dark_mode();save_cookies();">
                 </label>
             </div>
         </div>
