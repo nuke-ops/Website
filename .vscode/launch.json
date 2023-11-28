@@ -1,10 +1,10 @@
 {
     "configurations": [
         {
-            "name": "Python: run main.py",
+            "name": "Python: run app.py",
             "type": "python",
             "request": "launch",
-            "program": "main.py",
+            "program": "app.py",
             "console": "integratedTerminal",
             "env": {
                 "GEVENT_SUPPORT": "True"
