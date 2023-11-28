@@ -15,7 +15,6 @@ from . import main
 def valid_dice(data) -> bool:
     try:
         for key, value in data.items():
-            print(key, value, type(value))
             # check if ints are ints
             if key in ["dice", "sides", "sum"] and type(value) != int:
                 return False

@@ -4,5 +4,6 @@
 ```
 python -m venv .venv
 pip install -r requirements.txt
-.venv/bin/python -O -m gunicorn -k gevent -w 1 'app:create_app()'
+pip install gunicorn
+.venv/bin/python -O -m gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 'app:create_app()'
 ```
