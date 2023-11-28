@@ -15,15 +15,15 @@ pip install gunicorn
 ```
 ## run
 ### Debug
-###### Linux
+##### Linux
 ```
 .venv/bin/python uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
-###### Windows
+##### Windows
 ```
 .venv/scripts/python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
 ### Production
 ```
-.venv/bin/python gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+.venv/bin/python gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 127.0.0.1:8000
 ```
