@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="button-grid">
-    <a href="{{ url_for('main') }}">
+    <a href="{{ url_for('main.root') }}">
         <button class="redirect-button" id="neon"><i>BACK</i></button></a>
-    <a href="{{ url_for('main_ss13_rules') }}"> <button id="neon"><i>RULES</i></button></a>
+    <a href="{{ url_for('main.main_ss13_rules') }}"> <button id="neon"><i>RULES</i></button></a>
     <a href="byond://nukeops.com:1337"> <button id="neon"><i>SERVER</i></button></a>
     <!-- <a href="https://nukeops.com/ss13/wiki"> <button id="neon"><i>WIKI</i></button></a> -->
     <a href="https://github.com/nuke-ops/Nostra-13"><button id="neon"><i>GITHUB</i></button></a>
