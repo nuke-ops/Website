@@ -1,15 +1,8 @@
 import logging
-from typing import Optional, List
+from typing import List, Optional
 
-from fastapi import (
-    Depends,
-    FastAPI,
-    HTTPException,
-    Request,
-    WebSocket,
-    logger,
-    WebSocket,
-)
+from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, logger
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -18,9 +11,21 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 import models
-from database import get_db, diceEngine
+from database import diceEngine, get_db
 
 app = FastAPI(debug=True)
+
+origins = [
+    "https://nukeops.com.com",
+    "http://127.0.0.1:8000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 socket_base_url = "ws://127.0.0.1:8000/ws" if app.debug else "wss://nukeops.com/ws"
 

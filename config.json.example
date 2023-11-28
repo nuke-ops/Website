@@ -1,6 +1,9 @@
 {
-    "host": "host",
-    "user": "user",
-    "password": "password",
-    "database": "database"
+    "secret_key": "secret_key":,
+    "sql": {
+        "host": "host":,
+        "user": "user":,
+        "password": "password":,
+        "database": "database":
+    }
 }

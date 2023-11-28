@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 with open("config.json") as config:
-    conf = json.loads(config.read())
+    conf = json.loads(config.read())["sql"]
 
 diceEngine = create_engine(
     f"mysql://{conf['user']}:{conf['password']}@{conf['host']}/{conf['database']}"
