@@ -1,14 +1,14 @@
 {
     "configurations": [
         {
-            "name": "Python: run app.py",
+            "name": "Python: run server",
             "type": "python",
             "request": "launch",
-            "program": "app.py",
+            "program": "manage.py",
             "console": "integratedTerminal",
-            "env": {
-                "GEVENT_SUPPORT": "True"
-            }
+            "args": [
+                "runserver"
+            ]
         },
     ]
 }
