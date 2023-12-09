@@ -45,7 +45,7 @@ function load_cookies() {
 
 // socket
 
-const protocol = 'ws://';
+let protocol = 'ws://';
 if (window.location.protocol === 'https:') {
     protocol = 'wss://';
 }
