@@ -44,7 +44,12 @@ function load_cookies() {
 }
 
 // socket
-const socket = new WebSocket(`ws://${window.location.host}/dice/`);
+
+const protocol = 'ws://';
+if (window.location.protocol === 'https:') {
+    protocol = 'wss://';
+}
+const socket = new WebSocket(`${protocol}${window.location.host}/ws/dice/`);
 
 socket.onopen = function open() {
     console.log('WebSockets connection created.');
