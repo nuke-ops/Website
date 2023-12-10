@@ -23,6 +23,10 @@
     transform: skew(15deg);
 }
 
+.fa-xmark:before {
+    content: "\f00d"
+}
+
 .fa-calculator:before {
     content: "\f1ec"
 }
@@ -37,6 +41,10 @@
 
 .fa-dice-d20:before {
     content: "\f6cf"
+}
+
+.fa-thumbtack:before {
+    content: "\f08d"
 }
 
 .fa-eraser:before {

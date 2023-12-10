@@ -13,6 +13,10 @@ def dice(request):
     return render(request, "dice.html")
 
 
+def dice_electron(request):
+    return render(request, "dice_electron.html")
+
+
 @csrf_exempt
 def insert_dice_roll(request):
     if request.method == "POST":

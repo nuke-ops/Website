@@ -30,7 +30,7 @@ SECRET_KEY = conf["secret_key"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "nukeops.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "nukeops.com"]
 
 
 # Application definition
@@ -128,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Warsaw"
 
 USE_I18N = True
 

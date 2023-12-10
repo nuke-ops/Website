@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dice</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/nstrat.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script src="{% static 'js/dice.js' %}"></script>
+    <script src="{% static 'js/nukeops.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'css/radio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dice_electron.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome_icons.css' %}">
+</head>
+
+
+<div class="container">
+
+    <!-- TOP BOX -->
+    <div class="top-bar">
+        <div class="center-text">Dice</div>
+        <div class="button-container buttons are-small">
+            <button class="button is-info" id="toggleAlwaysOnTop"><i class="fa-solid fa-thumbtack"></i></button>
+            <button class="button is-danger" id="closeWindow"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <!-- RIGHT BOX -->
+    <div class="Right box">
+        <div class="radio-tile-group">
+            <div class="input-container">
+                <input id="non_radio" class="radio-button" type="radio" name="mod" checked />
+                <div class="radio-tile">
+                    <label class="radio-tile-label">None</label>
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="cus_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Custom
+                    <input id="cus_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Custom">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="str_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Strength
+                    <input id="str_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Str">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="dex_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Dexterity
+                    <input id="dex_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Dex">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="con_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Constitution
+                    <input id="con_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Con">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="int_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Intelligence
+                    <input id="int_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Int">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="wis_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Wisdom
+                    <input id="wis_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Wis">
+                </div>
+            </div>
+            <div class="input-container">
+                <input id="cha_radio" class="radio-button" type="radio" name="mod" />
+                <div class="radio-tile">Charisma
+                    <input id="cha_input" style="border: none;" class="input is-primary is-small" type="number"
+                        placeholder="Cha">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MIDDLE BOX-->
+    <div class="Middle box">
+        <div style=" flex: 1; margin-right: 10px; border-right: 1px solid #ccc; padding-right: 10px;">
+            <form method="post" action="/api/insert_dice_roll/" id="dice_form" onSubmit="return false;">
+                <div class="field is-horizontal has-addons">
+                    <div class="control is-expanded">
+                        <input id="name" class="input is-primary is-small" type="text" placeholder="Name">
+                    </div>
+                    <div class="control">
+                        <button id="formSubmit" class="button is-primary is-small" style="height: 100%;" type="submit"
+                            onclick="sendDiceRoll();save_cookies();">
+                            Roll &nbsp;<i class="fa-solid fa-dice-d20"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="field is-horizontal has-addons">
+                    <div class="control"> <input id="dice" class="input is-primary is-small" type="number"
+                            placeholder="Dice" value="1"></div>
+                    <div class="control"> <input id="sides" class="input is-primary is-small" type="number"
+                            placeholder="Sides" value="20"></div>
+                </div>
+            </form>
+        </div>
+        <div style="flex: 1;">
+            <button class="button is-primary is-small is-fullwidth" style="height: 20%;" type="submit">
+                magic bs<i class="fa-solid fa-dice-d20"></i>
+            </button>
+            <div class="content">test</div>
+        </div>
+    </div>
+
+    <!-- BOTTOM BOX -->
+    <div class="Bottom box" style="height: 90%;position: sticky;">
+        <div id="table_div">
+            <table id="json_table" class="table is-narrow is-hoverable is-fullwidth"
+                style="table-layout:fixed;word-wrap:break-word;font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Dice</th>
+                        <th>Sides</th>
+                        <th>Throw</th>
+                        <th>Mod</th>
+                        <th>Sum</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function updateButtonState() {
+        const alwaysOnTop = ipcRenderer.sendSync('get-always-on-top');
+        const button = document.getElementById('toggleAlwaysOnTop');
+
+        if (alwaysOnTop) {
+            // button.textContent = 'Always On Top: On';
+            button.style.opacity = "0.5"
+        } else {
+            // button.textContent = 'Always On Top: Off';
+            button.style.opacity = "1"
+        }
+    }
+    document.getElementById('toggleAlwaysOnTop').addEventListener('click', () => {
+        ipcRenderer.send('toggle-always-on-top');
+        updateButtonState();
+    });
+    updateButtonState();
+
+    document.getElementById('closeWindow').addEventListener('click', () => {
+        window.ipcRenderer.send('close-window');
+    });
+</script>
+
+</html>

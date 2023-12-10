@@ -1,0 +1,116 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    margin-top: 5%;
+    font-family: 'Arial', sans-serif;
+    background: #1F1B24;
+}
+
+.top-bar {
+    background-color: black;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    -webkit-app-region: drag;
+    z-index: 9999;
+}
+
+
+.center-text {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.button-container {
+    min-width: 100px;
+}
+
+#toggleAlwaysOnTop,
+#closeWindow {
+    -webkit-app-region: no-drag;
+    height: 25px;
+    left: 20%;
+}
+
+
+.container {
+    display: grid;
+    grid-auto-columns: 1fr;
+    gap: 10px 10px;
+    grid-template-areas:
+        "Top    Top    Top"
+        "Middle Middle Right"
+        "Bottom Bottom Right";
+}
+
+.Top {
+    grid-area: Top;
+}
+
+.Middle {
+    grid-area: Middle;
+    display: flex;
+}
+
+.Right {
+    grid-area: Right;
+}
+
+.Bottom {
+    grid-area: Bottom;
+}
+
+.radio-tile-group .input-container {
+    position: sticky;
+    height: 4rem;
+}
+
+#table_div {
+    height: 90%;
+    overflow-y: auto;
+}
+
+
+input::placeholder {
+    color: rgba(63, 61, 61, 0.651) !important;
+}
+
+.box,
+.input,
+.table {
+    background-color: #121212 !important;
+    color: white !important;
+}
+
+tr:hover {
+    background-color: rgba(0, 0, 0, 0.100) !important;
+}
+
+th:nth-child(n),
+td:nth-child(n) {
+    border-color: #00D1B2;
+    word-wrap: normal;
+}
+
+td:not(:nth-child(7)) {
+    font-size: 1.1em;
+}
+
+td:nth-child(5) {
+    font-size: 1em;
+    word-wrap: normal;
+}
+
+td:nth-child(7) {
+    font-size: 0.8em;
+    word-wrap: normal;
+}

@@ -89,10 +89,21 @@ function updateTable() {
 }
 
 function formatDate(dateTimeString) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const date = new Date(dateTimeString).toLocaleDateString(undefined, options);
-    const time = new Date(dateTimeString).toLocaleTimeString();
-    return `${date}<br>${time}`;
+    const originalDate = new Date(dateTimeString);
+    // const formattedDate = originalDate.toLocaleDateString('en-US', {
+    //     year: 'numeric',
+    //     month: '2-digit',
+    //     day: '2-digit',
+    // });
+
+    const formattedTime = originalDate.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false,
+    });
+    // return `${formattedDate}<br>${formattedTime}`;
+    return formattedTime;
 }
 
 
