@@ -82,3 +82,8 @@ th:nth-child(n),
 td:nth-child(n) {
 	border-color: #00D1B2;
 }
+
+th:nth-child(7),
+td:nth-child(7) {
+	text-align: right !important;
+}

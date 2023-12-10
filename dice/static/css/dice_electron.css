@@ -113,4 +113,13 @@ td:nth-child(5) {
 td:nth-child(7) {
     font-size: 0.8em;
     word-wrap: normal;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+    text-align: right !important;
 }

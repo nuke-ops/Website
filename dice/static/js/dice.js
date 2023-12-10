@@ -90,11 +90,11 @@ function updateTable() {
 
 function formatDate(dateTimeString) {
     const originalDate = new Date(dateTimeString);
-    // const formattedDate = originalDate.toLocaleDateString('en-US', {
-    //     year: 'numeric',
-    //     month: '2-digit',
-    //     day: '2-digit',
-    // });
+    const formattedDate = originalDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
 
     const formattedTime = originalDate.toLocaleTimeString('en-US', {
         hour: 'numeric',
@@ -102,8 +102,7 @@ function formatDate(dateTimeString) {
         second: 'numeric',
         hour12: false,
     });
-    // return `${formattedDate}<br>${formattedTime}`;
-    return formattedTime;
+    return `${formattedDate}<br>${formattedTime}`;
 }
 
 
