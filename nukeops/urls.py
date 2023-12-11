@@ -23,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("main_page.urls")),
     path("", include("dice.urls")),
-    path("accounts/", include("login_page.urls")),
+    path("accounts/", include("auth_app.urls")),
 ]
 
 handler400 = error_handler

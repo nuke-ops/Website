@@ -31,6 +31,7 @@ SECRET_KEY = conf["secret_key"]
 DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "nukeops.com"]
+CSRF_TRUSTED_ORIGINS = ["https://*.nukeops.com", "http://*.127.0.0.1"]
 
 
 # Application definition
@@ -38,7 +39,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0", "nukeops.com"]
 INSTALLED_APPS = [
     "daphne",
     "error_handlers",
-    "login_page",
+    "auth_app",
     "main_page",
     "dice",
     "channels",
