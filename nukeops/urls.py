@@ -15,21 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from main_page.views import main, main_ss13, main_ss13_rules
-from dice.views import dice, get_dice_rolls, insert_dice_roll, dice_electron
+from django.urls import include, path
 from error_handlers.views import error_handler
 from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", main, name="main"),
-    path("ss13/", main_ss13, name="main_ss13"),
-    path("ss13/rules/", main_ss13_rules, name="main_ss13_rules"),
-    path("dice/", dice, name="dice"),
-    path("dice/electron", dice_electron, name="dice_electron"),
-    path("api/get_dice_rolls/", get_dice_rolls, name="get_dice_rolls"),
-    path("api/insert_dice_roll/", insert_dice_roll, name="insert_dice_roll"),
+    path("", include("main_page.urls")),
+    path("", include("dice.urls")),
+    path("accounts/", include("login_page.urls")),
 ]
 
 handler400 = error_handler
