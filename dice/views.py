@@ -1,12 +1,16 @@
 import json
+import os
+import random
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from dice.models import Dice
+from nukeops.settings import MEDIA_ROOT
 
 
 def dice(request):
@@ -50,3 +54,37 @@ def receive(request):
             "message": "A new dice roll has occurred!",
         },
     )
+
+
+mbsTxt_path = os.path.join(MEDIA_ROOT, "mbs.txt")
+
+
+@login_required
+def mbs_input_page(request):
+    if request.method == "POST":
+        content = request.POST.get("content", "")
+        with open(mbsTxt_path, "w") as file:
+            file.write(content)
+
+    with open(mbsTxt_path, "r") as file:
+        notes = "".join(file.readlines()).replace("\n\n", "\n")
+
+    return render(request, "mbs.html", {"notes": notes})
+
+
+last_random_note = {}
+
+
+def get_mbs(request):
+    global last_random_note
+    if "refresh" in request.GET:
+        with open(mbsTxt_path, "r") as file:
+            notes = "".join(file.readlines()).replace("\n\n", "\n").split("\n")
+            notes_list = []
+            for item in notes:
+                parts = item.split(". ", 1)
+                if len(parts) == 2:
+                    key, value = parts
+                    notes_list.append({"key": key, "value": value})
+            last_random_note = random.choice(notes_list)
+    return JsonResponse(last_random_note)

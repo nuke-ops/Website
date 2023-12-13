@@ -54,3 +54,7 @@
 .fa-file-lines:before {
     content: "\f15c"
 }
+
+.fa-wheelchair-move:before {
+    content: "\e2ce"
+}

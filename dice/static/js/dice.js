@@ -60,8 +60,32 @@ socket.onmessage = function (event) {
     if (data["message"] === "update_dice_roll") {
         updateTable();
     }
+    if (data["message"] === "update_mbs") {
+        getMbs();
+    }
+};
+
+async function getMbs() {
+    try {
+        const response = await fetch('/api/get_mbs/');
+        const data = await response.json();
+        document.getElementById('mbs_textbox').innerText = data.value;
+    } catch (error) {
+        console.error('Error fetching and updating MBS data:', error);
+    }
 }
 
+async function updateMbs() {
+    startLoading("mbs_textbox");
+    try {
+        const key = await fetch('/api/get_mbs/?refresh=true')
+        socket.send(JSON.stringify({ 'update_mbs': key }));
+    } catch (error) {
+        console.error('Error triggering MBS update:', error);
+    } finally {
+        stopLoading("mbs_textbox");
+    }
+}
 
 // dice
 

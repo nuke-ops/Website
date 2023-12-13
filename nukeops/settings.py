@@ -148,6 +148,7 @@ STATICFILES_DIRS = [
 
 if conf["static_path"]:
     STATIC_ROOT = conf["static_path"]
+MEDIA_ROOT = "media/"
 if conf["media_path"]:
     MEDIA_ROOT = conf["media_path"]
 
