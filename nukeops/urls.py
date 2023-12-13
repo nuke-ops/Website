@@ -24,6 +24,7 @@ urlpatterns = [
     path("", include("main_page.urls")),
     path("", include("dice.urls")),
     path("accounts/", include("auth_app.urls")),
+    path("", include("stream.urls")),
 ]
 
 handler400 = error_handler

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "auth_app",
     "main_page",
     "dice",
+    "stream",
     "channels",
     "django.contrib.admin",
     "django.contrib.auth",
