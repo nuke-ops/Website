@@ -10,8 +10,8 @@ from .views import (
 
 urlpatterns = [
     path("dice/", dice, name="dice"),
-    path("dice/electron", dice_electron, name="dice_electron"),
-    path("dice/mbs", mbs_input_page, name="mbs_input"),
+    path("dice/electron/", dice_electron, name="dice_electron"),
+    path("dice/mbs/", mbs_input_page, name="mbs_input"),
     path("api/get_dice_rolls/", get_dice_rolls, name="get_dice_rolls"),
     path("api/insert_dice_roll/", insert_dice_roll, name="insert_dice_roll"),
     path("api/get_mbs/", get_mbs, name="get_mbs"),
