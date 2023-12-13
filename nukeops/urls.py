@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.conf.urls import handler404, handler500
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 from error_handlers.views import error_handler
 
@@ -24,7 +24,7 @@ from .views import media_access
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path(r"^media/(?P<path>.*)", media_access, name="media"),
+    re_path(r"^media/(?P<path>.*)", media_access, name="media"),
     path("", include("main_page.urls")),
     path("", include("dice.urls")),
     path("accounts/", include("auth_app.urls")),
