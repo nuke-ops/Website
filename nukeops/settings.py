@@ -145,8 +145,11 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
 if conf["static_path"]:
     STATIC_ROOT = conf["static_path"]
+if conf["media_path"]:
+    MEDIA_ROOT = conf["media_path"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

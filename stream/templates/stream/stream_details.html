@@ -11,15 +11,15 @@
     {% if stream.authorization_required %}
     {% if user.is_authenticated %}
     <h2>Stream: {{ stream.title }}</h2>
-    <p>RTMP URL: {{ stream.rtmp_url }}</p>
     <video id="hlsPlayer" class="video-js vjs-default-skin" controls width="640" height="360">
-        <source src="https://nukeops.com/hls/{{ stream.title|urlencode }}.m3u8" type="application/x-mpegURL">
+        <source src="https://nukeops.com/media/protected/hls/{{ stream.title|urlencode }}.m3u8"
+            type="application/x-mpegURL">
         Your browser does not support the video tag.
     </video>
     <script>
         var player = videojs('hlsPlayer', {
             techOrder: ['html5'],
-            sources: [{ type: "application/x-mpegURL", src: "https://nukeops.com/hls/{{ stream.title|urlencode }}.m3u8" }]
+            sources: [{ type: "application/x-mpegURL", src: "https://nukeops.com/media/protected/hls/{{ stream.title|urlencode }}.m3u8" }]
         });
     </script>
     {% else %}
@@ -27,15 +27,15 @@
     {% endif %}
     {% else %}
     <h2>Stream: {{ stream.title }}</h2>
-    <p>RTMP URL: {{ stream.rtmp_url }}</p>
     <video id="hlsPlayer" class="video-js vjs-default-skin" controls width="640" height="360">
-        <source src="https://nukeops.com/hls/{{ stream.title|urlencode }}.m3u8" type="application/x-mpegURL">
+        <source src="https://nukeops.com/media/protected/hls/{{ stream.title|urlencode }}.m3u8"
+            type="application/x-mpegURL">
         Your browser does not support the video tag.
     </video>
     <script>
         var player = videojs('hlsPlayer', {
             techOrder: ['html5'],
-            sources: [{ type: "application/x-mpegURL", src: "https://nukeops.com/hls/{{ stream.title|urlencode }}.m3u8" }]
+            sources: [{ type: "application/x-mpegURL", src: "https://nukeops.com/media/protected/hls/{{ stream.title|urlencode }}.m3u8" }]
         });
     </script>
     {% endif %}

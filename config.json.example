@@ -1,6 +1,7 @@
 {
     "secret_key": "secret_key",
     "static_path": "",
+    "media_path": "",
     "sql": {
         "host": "host",
         "user": "user",

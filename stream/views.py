@@ -15,7 +15,6 @@ def stream_details(request, stream_id):
     return render(request, "stream/stream_details.html", {"stream": stream})
 
 
-@login_required
 def create_stream(request):
     if request.method == "POST":
         form = StreamForm(request.POST)
