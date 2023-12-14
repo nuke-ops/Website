@@ -12,6 +12,8 @@ __pycache__/
 
 # app
 /static/CACHE/
-/media/
+/media/*
+!/media/robots.txt
+!/media/sitemap.xml
 config.json
 *.log
