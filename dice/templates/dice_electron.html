@@ -95,26 +95,30 @@
     <!-- MIDDLE BOX-->
     <div class="Middle box">
         <div style=" flex: 1; margin-right: 10px; border-right: 1px solid #ccc; padding-right: 10px;">
-            <form method="post" action="/api/insert_dice_roll/" id="dice_form" onSubmit="return false;">
-                <div class="field is-horizontal has-addons">
+            <form method="post" id="dice_form" onsubmit="return false;">
+                {% csrf_token %}
+                <div class="field has-addons">
                     <div class="control is-expanded">
-                        <input id="name" class="input is-primary is-small" type="text" placeholder="Name">
+                        {{ form.name }}
                     </div>
                     <div class="control">
-                        <button id="formSubmit" class="button is-primary is-small" style="height: 100%;" type="submit"
-                            onclick="sendDiceRoll();save_cookies();">
+                        <button id="formSubmit" class="button is-primary is-small" type="submit"
+                            onclick="sendDiceRoll(event);save_cookies();">
                             Roll &nbsp;<i class="fa-solid fa-dice-d20"></i>
                         </button>
                     </div>
                 </div>
                 <div class="field is-horizontal has-addons">
-                    <div class="control"> <input id="dice" class="input is-primary is-small" type="number"
-                            placeholder="Dice" value="1"></div>
-                    <div class="control"> <input id="sides" class="input is-primary is-small" type="number"
-                            placeholder="Sides" value="20"></div>
+                    <div class="control">
+                        {{ form.dice }}
+                    </div>
+                    <div class="control">
+                        {{ form.sides }}
+                    </div>
                 </div>
             </form>
         </div>
+
         <div style="flex: 1;">
             <button class="button is-link is-rounded is-small is-fullwidth" onclick="updateMbs();">MBS
                 &nbsp;<i class="fa-solid fa-wheelchair-move"></i></button>

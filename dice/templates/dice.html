@@ -16,7 +16,6 @@
     <script src="{% static 'js/math.js' %}"></script>
     <script src="{% static 'js/dice.js' %}"></script>
     <script src="{% static 'js/nukeops.js' %}"></script>
-    <script>$(function () { dark_mode(); });</script>
 
     <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
     <link rel="stylesheet" href="{% static 'css/dice.css' %}">
@@ -31,44 +30,47 @@
 
         <!-- TOP LEFT BOX -->
         <div class="Top-left box">
-            <form method="post" action="/api/insert_dice_roll/" id="dice_form" onSubmit="return false;">
-                <div class="field is-horizontal has-addons">
+            <form method="post" id="dice_form" onsubmit="return false;">
+                {% csrf_token %}
+                <div class="field has-addons">
                     <div class="control is-expanded">
-                        <input id="name" class="input is-primary" type="text" placeholder="Name">
+                        {{ form.name }}
                     </div>
                     <div class="control">
                         <button id="formSubmit" class="button is-primary" type="submit"
-                            onclick="sendDiceRoll();save_cookies();">
+                            onclick="sendDiceRoll(event);save_cookies();">
                             Roll &nbsp;<i class="fa-solid fa-dice-d20"></i>
                         </button>
                     </div>
                 </div>
-
                 <div class="field is-horizontal has-addons">
-                    <div class="control"> <input id="dice" class="input is-primary" type="number" placeholder="Dice"
-                            value="1"></div>
-                    <div class="control"> <input id="sides" class="input is-primary" type="number" placeholder="Sides"
-                            value="20"></div>
+                    <div class="control">
+                        {{ form.dice }}
+                    </div>
+                    <div class="control">
+                        {{ form.sides }}
+                    </div>
                 </div>
-
-                <div class="field has-addons">
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,20);">1d20</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,4);">1d4</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,6);">1d6</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,8);">1d8</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,10);">1d10</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,12);">1d12</button>
-                    <button class="button is-link is-rounded is-small is-fullwidth presetButton"
-                        onclick="set_dice_values(1,100);">1d100</button>
-                </div>
-
             </form>
+
+            <!-- preset dice buttons -->
+            <div class="field is-horizontal has-addons" id="presetButtonDiv">
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,20);">1d20</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,4);">1d4</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,6);">1d6</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,8);">1d8</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,10);">1d10</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,12);">1d12</button></div>
+                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
+                        onclick="set_dice_values(1,100);">1d100</button></div>
+            </div>
+
             <!-- errors -->
             <article class="message is-danger">
                 <div id="formErrorHead"></div>

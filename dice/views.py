@@ -7,36 +7,59 @@ from channels.layers import get_channel_layer
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from dice.models import Dice
 from nukeops.settings import MEDIA_ROOT
 
+from .forms import DiceForm
+
 
 def dice(request):
-    return render(request, "dice.html")
+    return render(request, "dice.html", {"form": DiceForm})
 
 
 def dice_electron(request):
-    return render(request, "dice_electron.html")
+    return render(request, "dice_electron.html", {"form": DiceForm})
 
 
-@csrf_exempt
+@require_POST
 def insert_dice_roll(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        dice_roll = Dice(
-            name=data["name"],
-            dice=data["dice"],
-            sides=data["sides"],
-            throws=data["throws"],
-            sum=data["sum"],
-            modifier=data["modifier"],
-        )
-        dice_roll.save()
-        return JsonResponse({"message": "Dice roll inserted successfully"})
-    else:
-        return JsonResponse({"message": "Invalid request method"}, status=400)
+    try:
+        form = DiceForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+
+            name = cleaned_data["name"]
+            dice = cleaned_data["dice"]
+            sides = cleaned_data["sides"]
+            modifier = cleaned_data["modifier"]
+            raw_modifier = (
+                int(cleaned_data["raw_modifier"])
+                if cleaned_data["raw_modifier"]
+                else ""
+            )
+
+            throws = [random.randint(1, sides) for _ in range(dice)]
+            sum_value = sum(throws) + raw_modifier if raw_modifier else sum(throws)
+
+            dice_roll = Dice(
+                name=name,
+                dice=dice,
+                sides=sides,
+                throws=", ".join(map(str, throws)),
+                sum=sum_value,
+                modifier=modifier,
+            )
+            dice_roll.save()
+
+            return JsonResponse({"message": "Dice roll inserted successfully"})
+        else:
+            errors = {field: form.errors[field][0] for field in form.errors}
+            return JsonResponse({"error": errors}, status=400)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def get_dice_rolls(request):
@@ -63,7 +86,7 @@ mbsTxt_path = os.path.join(MEDIA_ROOT, "mbs.txt")
 def mbs_input_page(request):
     if request.method == "POST":
         content = request.POST.get("content", "")
-        with open(mbsTxt_path, "w") as file:
+        with open(mbsTxt_path, "x") as file:
             file.write(content)
 
     with open(mbsTxt_path, "r") as file:

@@ -1,45 +1,46 @@
-// load
+// on load
 
 $(function () { load_cookies() });
 $(function () { updateTable() });
+$(function () { dark_mode() });
 
 // cookies
 
 function deleteAllCookies() {
     startLoading("#clearButton");
-    let saved_cookies = ["name", "cus", "str", "dex", "con", "int", "wis", "cha", "dark_theme"];
-    for (cookie of saved_cookies) {
-        Cookies.remove(cookie);
-    }
+    Cookies.remove('user_data');
     stopLoading("#clearButton");
 }
 
 function save_cookies() {
-    Cookies.set('name', $("#name").val());
+    let userData = {
+        name: $("#name").val(),
+        dark_theme: $('#dark-mode_button').is(":checked"),
+        cus: $("#cus_input").val(),
+        str: $("#str_input").val(),
+        dex: $("#dex_input").val(),
+        con: $("#con_input").val(),
+        int: $("#int_input").val(),
+        wis: $("#wis_input").val(),
+        cha: $("#cha_input").val(),
+    };
 
-    if ($('#dark-mode_button').is(":checked")) {
-        Cookies.set('dark_theme', true);
-    }
-    else {
-        Cookies.set('dark_theme', false);
-    }
-
-    let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
-    for (mod of modifiers) {
-        Cookies.set(mod, $("#" + mod + "_input").val());
-    }
-
-
+    Cookies.set('user_data', JSON.stringify(userData));
 }
 
 function load_cookies() {
-    $("#name").attr("value", Cookies.get("name"));
-
-    $("#dark-mode_button")[0].checked = (Cookies.get("dark_theme") === 'true');
-
-    let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
-    for (mod of modifiers) {
-        $("#" + mod + "_input").attr("value", Cookies.get(mod));
+    let userData = Cookies.get('user_data');
+    if (userData) {
+        userData = JSON.parse(userData);
+        $("#name").val(userData.name);
+        $("#dark-mode_button")[0].checked = userData.dark_theme;
+        $("#cus_input").val(userData.cus);
+        $("#str_input").val(userData.str);
+        $("#dex_input").val(userData.dex);
+        $("#con_input").val(userData.con);
+        $("#int_input").val(userData.int);
+        $("#wis_input").val(userData.wis);
+        $("#cha_input").val(userData.cha);
     }
 }
 
@@ -64,6 +65,8 @@ socket.onmessage = function (event) {
         getMbs();
     }
 };
+
+// mbs
 
 async function getMbs() {
     try {
@@ -145,7 +148,7 @@ function sendDiceRoll() {
         formErrors.push("You must enter a name");
     }
     else if (!alphanumeric(name)) {
-        formErrors.push("Illegal characters in name");
+        formErrors.push("Name must be alphanumeric");
     }
     else if (name.length > 35) {
         formErrors.push("Name length limit: 35");
@@ -158,7 +161,7 @@ function sendDiceRoll() {
         formErrors.push("Max amount of sides: 100");
     }
     if (dice < 1 || !dice) {
-        formErrors.push("There must be at leas one dice");
+        formErrors.push("There must be at leas 1 dice");
     }
     if (sides <= 1 || !sides) {
         formErrors.push("Dice must have at least 2 sides");
@@ -168,10 +171,11 @@ function sendDiceRoll() {
         return;
     }
 
+    const formData = new FormData(form);
+
     // check if there's modifier
     let raw_modifier = 0;
     let modifier = "";
-
     if (!$("input[id='non_radio']:checked").val()) {
         let modifiers = ["cus", "str", "dex", "con", "int", "wis", "cha"];
         for (mod of modifiers) {
@@ -185,36 +189,16 @@ function sendDiceRoll() {
                 modifier += raw_modifier + ")"
             };
         }
+        formData.append('modifier', modifier);
+        formData.append('raw_modifier', raw_modifier);
     }
 
-    // roll
-    let roll = [];
-    for (let i = 1; i <= dice; i++) {
-        roll.push(Math.floor((Math.random() * sides) + 1));
-    }
-    let throws = roll.join(", ")
-
-    // sum
-    let sum = 0;
-    for (const x of roll) {
-        sum += x;
-    } sum += raw_modifier * 1;
-
-    const diceRollData = {
-        name: name,
-        dice: dice,
-        sides: sides,
-        throws: throws,
-        sum: sum,
-        modifier: modifier
-    };
-    console.log(diceRollData)
     fetch('/api/insert_dice_roll/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken'),
         },
-        body: JSON.stringify(diceRollData),
+        body: formData,
     })
         .then(response => {
             if (!response.ok) {
@@ -224,7 +208,7 @@ function sendDiceRoll() {
         })
         .then(data => {
             console.log('Success:', data);
-            socket.send(JSON.stringify({ 'update_dice_roll': diceRollData }));
+            socket.send(JSON.stringify({ 'update_dice_roll': data }));
         })
         .catch(error => {
             console.error('Error:', error);
@@ -265,7 +249,7 @@ function formError(errors) {
     }
 
     $("#formErrorHead").addClass("message-header");
-    $("#formErrorHead").css({ "margin-top": "10px" });
+    $("#formErrorHead").css({ "margin-top": "25px" });
     $("#formErrorHead").html("Error <button class='delete' onclick='closeError();'/>");
     $("#formErrorBody").addClass("message-body");
     $("#formErrorBody").html(output);
@@ -273,7 +257,7 @@ function formError(errors) {
 }
 function closeError() {
     $("#formErrorHead").removeClass("message-header");
-    $("#formErrorHead").css({ "margin-top": "10px" });
+    $("#formErrorHead").css({ "margin-top": "25px" });
     $("#formErrorBody").removeClass("message-body");
     $("#formErrorHead, #formErrorBody").html("");
 }
@@ -303,19 +287,16 @@ function set_dice_values(dice, sides) {
 }
 
 function dark_mode() {
-    if (!$("#dark-mode_button").is(':checked')) {
+    if ($("#dark-mode_button").is(':checked')) {
         $("#dark-mode_label").removeClass("is-outlined");
         $("#dark-mode").html(`
         <style>
-            input::placeholder{
-                color: rgba(63, 61, 61, 0.651) !important;
-            }
             .box, .input, .table{
-                background-color: #121212 !important;
-                color: white !important;
+                background-color: white !important;
+                color: #121212 !important;
             }
             th:nth-child(n), td:nth-child(n){
-                color: white;
+                color: #121212;
             }
         </style>
         `);

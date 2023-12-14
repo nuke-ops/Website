@@ -72,10 +72,31 @@ input[type=checkbox] {
 	display: none;
 }
 
-.presetButton {
-	margin-left: 0.5%;
-	margin-right: 0.5%;
-	left: -3.5%;
+#presetButton {
+	top: 15px;
+	border-left: 1px solid #ccc;
+	padding-left: 14px;
+	padding-right: 14px;
+}
+
+#presetButtonDiv>div:first-child button {
+	border-left: none !important;
+}
+
+input::placeholder {
+	color: rgba(63, 61, 61, 0.651) !important;
+}
+
+.box,
+.input,
+.table {
+	background-color: #121212 !important;
+	color: white !important;
+}
+
+th:nth-child(n),
+td:nth-child(n) {
+	color: white;
 }
 
 th:nth-child(n),

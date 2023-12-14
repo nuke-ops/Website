@@ -5,7 +5,7 @@ import re
 
 def validate_name(value):
     if not re.match(r"^[0-9a-zA-Z,+\- ]+$", value):
-        raise ValidationError("Name must be alphanumeric")
+        raise ValidationError(("Name must be alphanumeric"), code="invalid_name")
 
 
 def validate_throws(value):
