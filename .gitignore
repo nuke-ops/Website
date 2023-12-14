@@ -11,6 +11,7 @@ __pycache__/
 .venv/
 
 # app
+/static/CACHE/
 /media/
 config.json
 *.log

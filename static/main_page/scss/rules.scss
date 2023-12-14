@@ -25,17 +25,15 @@ dt {
 }
 
 button {
-  width: 5%;
-  height: 40px;
+  width: 15%;
+  height: 1%;
   border: solid white 2px;
   border-radius: 5px;
   background-color: transparent;
   color: white;
-  font-size: 30px;
   overflow: hidden;
   font-family: joystixmonospace;
-  font-size: min(max(0px, 3.5vw), 100%);
-
+  font-size: 1vw;
 }
 
 li {

@@ -86,12 +86,14 @@ mbsTxt_path = os.path.join(MEDIA_ROOT, "mbs.txt")
 def mbs_input_page(request):
     if request.method == "POST":
         content = request.POST.get("content", "")
-        with open(mbsTxt_path, "x") as file:
+        with open(mbsTxt_path, "w") as file:
             file.write(content)
-
-    with open(mbsTxt_path, "r") as file:
-        notes = "".join(file.readlines()).replace("\n\n", "\n")
-
+    try:
+        notes = ""
+        with open(mbsTxt_path, "r") as file:
+            notes = "".join(file.readlines()).replace("\n\n", "\n")
+    except FileNotFoundError:
+        open(mbsTxt_path, "w")
     return render(request, "mbs.html", {"notes": notes})
 
 
