@@ -164,4 +164,4 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
-COMPRESS_ROOT = "static/"
+COMPRESS_ROOT = STATIC_ROOT if conf["static_path"] else "static/"
