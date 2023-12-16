@@ -3,10 +3,14 @@
 <!DOCTYPE html>
 <html lang="en-GB">
     <head>
-        <title>Streams list</title>
+        <title>
+            {% block title %}
+                Stream
+            {% endblock title %}
+        </title>
         <meta charset="utf-8">
         <meta name="description" content="The nuke-ops stream platform" />
-        <meta name="keywords" content="Stream list" />
+        <meta name="keywords" content="Stream" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="{% static "shared/images/nstrat.ico" %}">
         <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
@@ -16,20 +20,19 @@
                   rel="stylesheet"
                   media="screen">
         {% endcompress %}
+        <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
+        <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+        {% block head %}
+        {% endblock head %}
     </head>
     <body>
-        <div id="stream_list" class="box">
-            <h2>Available Streams:</h2>
-            <ul>
-                {% for stream in streams %}
-                    <li>
-                        <strong>{{ stream.title }}</strong> -
-                        <a href="{% url 'stream_detail' stream.id %}">Watch Stream</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <br />
-            <a id="create_stream" href="{% url 'create_stream' %}">Create a new stream</a>
+        <div id="corner_box" class="box">
+            <a href="{% url 'stream_list' %}">
+                <button class="button is-dark is-fullwidth">Back</button>
+            </a>
+            <h2 class="title is-6">Stream: {{ stream.title }}</h2>
         </div>
+        {% block content %}
+        {% endblock content %}
     </body>
 </html>

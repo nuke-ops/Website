@@ -1,0 +1,39 @@
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en-GB">
+    <head>
+        <title>
+            {% block title %}
+                Main Page
+            {% endblock title %}
+        </title>
+        <meta charset="utf-8">
+        <meta name="description" content="The nuke-ops Project" />
+        <meta name="keywords" content="Main Page" />
+        <meta name="google-site-verification"
+              content="7e-wRSGeUMNQA-BhZJY0oofBHBAiQaRTso3AeU4PhbU" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static 'shared/images/nstrat.ico' %}">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+              rel="stylesheet">
+        <style>
+        @font-face {
+            font-family: joystixmonospace;
+            src: url("{% static 'shared/fonts/joystix_monospace-webfont.woff' %}")
+        }
+        </style>
+        {% compress css %}
+            <link type="text/x-scss"
+                  href="{% static 'main_page/scss/main.scss' %}"
+                  rel="stylesheet"
+                  media="screen">
+        {% endcompress %}
+        {% block head %}
+        {% endblock head %}
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>

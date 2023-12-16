@@ -1,15 +1,28 @@
-{% extends 'main/head.html' %}
-{% block title %} Main Page {% endblock %}
+{% extends "main/main_template.html" %}
+{% block title %}
+    Main Page
+{% endblock title %}
 {% block content %}
-
-<div class="button-grid">
-    <a href="{% url 'main_ss13' %}">
-        <button class="redirect-button" id="neon"><i>SS13</i></button></a>
-    <a href="https://discord.gg/bxgeRPq">
-        <button class="redirect-button" id="neon"><i>DISCORD</i></button></a>
-    <a href="warframe/" style="visibility: hidden;">
-        <button class="redirect-button" id="neon"><i>WARFRAME</i></button></a>
-    <a href="ts3server://nukeops.com">
-        <button class="redirect-button" id="neon"><i>TEAMSPEAK3</i></button></a>
-</div>
-{% endblock %}
+    <div class="button-grid">
+        <a href="{% url 'main_ss13' %}">
+            <button class="redirect-button" id="neon">
+                <i>SS13</i>
+            </button>
+        </a>
+        <a href="https://discord.gg/bxgeRPq">
+            <button class="redirect-button" id="neon">
+                <i>DISCORD</i>
+            </button>
+        </a>
+        <a href="warframe/" style="visibility: hidden;">
+            <button class="redirect-button" id="neon">
+                <i>WARFRAME</i>
+            </button>
+        </a>
+        <a href="ts3server://nukeops.com">
+            <button class="redirect-button" id="neon">
+                <i>TEAMSPEAK3</i>
+            </button>
+        </a>
+    </div>
+{% endblock content %}

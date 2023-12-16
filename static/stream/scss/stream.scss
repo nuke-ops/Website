@@ -1,0 +1,43 @@
+body {
+    background-color: black;
+}
+
+#stream_list {
+    background-color: rgb(42, 42, 42);
+    width: 50vw;
+
+    h2 {
+        color: rgb(195, 195, 195);
+    }
+
+    strong {
+        color: white;
+    }
+
+    #create_stream {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+}
+
+#corner_box {
+    width: 160px;
+    background-color: rgb(27, 27, 80);
+
+    h2 {
+        color: rgb(195, 195, 195);
+        background-color: rgb(36, 36, 36);
+        height: 20px !important;
+        text-wrap: nowrap;
+    }
+}
+
+#playerDiv {
+    border-radius: 10px;
+    border-color: rgb(6, 0, 174);
+    border-style: double;
+
+    position: absolute;
+    max-width: 60%;
+    left: 20%;
+}
