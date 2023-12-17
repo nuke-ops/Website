@@ -19,19 +19,21 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+from auth_app.views import user_login
 from error_handlers.views import error_handler
 
 from .settings import MEDIA_ROOT
 from .views import media_access
 
 urlpatterns = [
+    path("admin/login/", user_login),
     path("admin/", admin.site.urls),
     re_path(r"^media/(?P<path>.*)", media_access, name="media"),
     path("robots.txt", serve, {"document_root": MEDIA_ROOT, "path": "robots.txt"}),
     path("sitemap.xml", serve, {"document_root": MEDIA_ROOT, "path": "sitemap.xml"}),
     path("", include("main_page.urls")),
     path("", include("dice.urls")),
-    path("accounts/", include("auth_app.urls")),
+    path("", include("auth_app.urls")),
     path("", include("stream.urls")),
 ]
 
