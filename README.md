@@ -26,12 +26,11 @@ python -O -m daphne nukeops.asgi:application
 
 ## Apps
 
-| App               | Desc                                                          |
-| ----------------- | ------------------------------------------------------------- |
-| main_page         | Main Page                                                     |
-| dice              | D&D focused dice roller                                       |
-| stream            | Bootleg stream platform                                       |
-| auth_app          | Authentication system                                         |
-|                   | using default django auth model (for now, question mark)      |
-| error_handlers    | Error handlers                                                |
+| App               | Desc                                                                                  |
+| ----------------- | ------------------------------------------------------------------------------------- |
+| main_page         | Main Page                                                                             |
+| dice              | D&D focused dice roller                                                               |
+| stream            | Bootleg stream platform                                                               |
+| auth_app          | Authentication system <br> using default django auth model (for now, question mark)   |
+| error_handlers    | Error handlers                                                                        |
 
