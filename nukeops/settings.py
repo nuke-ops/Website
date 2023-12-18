@@ -14,8 +14,13 @@ import json
 import os
 from pathlib import Path
 
-with open("config.json") as config:
-    conf = json.loads(config.read())
+try:
+    with open("config.json") as config:
+        conf = json.loads(config.read())
+except FileNotFoundError:
+    with open("config.json.example") as config:
+        print("config file not found, loading the example config")
+        conf = json.loads(config.read())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,6 +111,14 @@ DATABASES = {
         "PORT": "3306",
     }
 }
+# use sqlite if there's no db config
+if conf["sql"]["host"] == "host":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
 
 # Password validation
