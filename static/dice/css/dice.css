@@ -1,0 +1,110 @@
+::-webkit-scrollbar {
+	width: 0.5em;
+	background: #1F1B24;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 100vw;
+	margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #00E090;
+	border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #3E8ED0;
+}
+
+::-webkit-scrollbar-thumb:active {
+	background: #7A9AB9;
+}
+
+body {
+	background: #1F1B24;
+	margin-top: 10px;
+}
+
+.container {
+	display: grid;
+	grid-auto-columns: 1fr;
+	gap: 0px 1%;
+	grid-template-areas:
+		"Top-left Top Top-right"
+		"Middle Middle Right"
+		"Bottom Bottom Bottom-right";
+}
+
+.Top-left {
+	grid-area: Top-left;
+}
+
+.Top-right {
+	grid-area: Top-right;
+}
+
+.Top {
+	grid-area: Top;
+}
+
+.Bottom {
+	grid-area: Bottom;
+}
+
+.Bottom-right {
+	grid-area: Bottom-right;
+}
+
+.Middle {
+	grid-area: Middle;
+}
+
+.Right {
+	grid-area: Right;
+}
+
+tr:hover {
+	background-color: rgba(0, 0, 0, 0.100) !important;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+#presetButton {
+	top: 15px;
+	border-left: 1px solid #ccc;
+	padding-left: 14px;
+	padding-right: 14px;
+}
+
+#presetButtonDiv>div:first-child button {
+	border-left: none !important;
+}
+
+input::placeholder {
+	color: rgba(63, 61, 61, 0.651) !important;
+}
+
+.box,
+.input,
+.table {
+	background-color: #121212 !important;
+	color: white !important;
+}
+
+th:nth-child(n),
+td:nth-child(n) {
+	color: white;
+}
+
+th:nth-child(n),
+td:nth-child(n) {
+	border-color: #00D1B2;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+	text-align: right !important;
+}

@@ -1,0 +1,17 @@
+{% extends "stream/stream_template.html" %}
+{% block title %}
+    {{ stream.title }}
+{% endblock title %}
+{% block content %}
+    {% if stream.authorization_required %}
+        {% if user.is_authenticated %}
+            {% include "stream/rtmp_player.html" %}
+        {% else %}
+            <p>
+                You need to be logged in to watch this stream. <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+            </p>
+        {% endif %}
+    {% else %}
+        {% include "stream/rtmp_player.html" %}
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,8 @@
+wheel==0.42.0
+channels==4.0.0
+Django==5.0
+mysqlclient==2.2.0
+daphne==4.0.0
+channels-redis==4.1.0
+django-compressor==4.4
+django-libsass==0.9

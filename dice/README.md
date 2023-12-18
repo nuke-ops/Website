@@ -4,4 +4,4 @@ The dice
 
 Also, some preview I guess
 
-![image](https://user-images.githubusercontent.com/18237380/194573926-60031a8b-e320-402f-a976-0879701bf9b8.png)
+![image](https://github.com/nuke-ops/nukeops.com/assets/18237380/8c21b124-1340-49b6-bd13-00051b6c3326)

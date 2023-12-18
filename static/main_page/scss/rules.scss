@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+  background-color: #2e0000;
+  background-image: none;
+}
+
+div {
+  margin: auto;
+  padding: auto
+}
+
+dd {
+  font-size: 0.875em;
+  font-family: 'Roboto', sans-serif;
+  color: #ef3129;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+}
+
+dt {
+  font-size: 1em;
+  font-family: 'Open Sans', sans-serif;
+  color: #C50000;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+}
+
+button {
+  width: 15%;
+  height: 1%;
+  border: solid white 2px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: white;
+  overflow: hidden;
+  font-family: joystixmonospace;
+  font-size: 1vw;
+}
+
+li {
+  font-size: small;
+  color: white;
+  font-family: joystixmonospace;
+  font-style: italic
+}
+
+h1 {
+  color: white;
+  font-family: joystixmonospace;
+  font-style: italic
+}
+
+button:selection {
+  color: red;
+  background-color: transparent
+}
+
+button:hover {
+  color: red;
+  border: solid red 2px
+}
+
+@media (max-width: 1650px) {
+  button {
+    font-size: 30px
+  }
+}
+
+@media (max-width: 1200px) {
+  button {
+    font-size: 25px
+  }
+}
+
+@media (max-width: 1000px) {
+  button {
+    font-size: 15px
+  }
+}
+
+@media (max-width: 600px) {
+  button {
+    font-size: 10px
+  }
+}
+
+@media (max-width: 400px) {
+  button {
+    font-size: 7px
+  }
+}
+
+.wrap {
+  width: 320px;
+  height: 192px;
+  padding: 0;
+  overflow: hidden
+}
+
+.frame {
+  width: 1280px;
+  height: 786px;
+  border: 0;
+  -ms-transform: scale(0.25);
+  -moz-transform: scale(0.25);
+  -o-transform: scale(0.25);
+  -webkit-transform: scale(0.25);
+  transform: scale(0.25);
+  -ms-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0
+}
+
+#bt1 {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 20px;
+  top: 50px;
+}

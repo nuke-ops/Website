@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MBS</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'shared/images/nstrat.ico' %}">
+    <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #181818;
+            color: #fff;
+        }
+
+        form {
+            max-width: 75%;
+            margin: auto;
+        }
+
+        textarea {
+            min-height: 800px !important;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #2f2f2f !important;
+            color: rgb(255, 255, 255) !important;
+            border-color: #4a4a4a;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">mbs</label>
+            <div class="control">
+                <textarea class="textarea" name="content" placeholder="Enter your notes here">{{ notes }}</textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Save</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8">
+        <meta name="description" content="login panel" />
+        <meta name="keywords" content="login panel" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static "shared/images/nstrat.ico" %}">
+        <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
+        <link rel="stylesheet" href="{% static 'auth_app/css/login.css' %}">
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
+                defer></script>
+        <script>
+            window.onloadTurnstileCallback = function () {
+                turnstile.render("#login_box", {
+                    sitekey: "0x4AAAAAAAOs7enSVbUYlAD-",
+                    callback: function(token) {
+                        console.log(`Challenge Success ${token}`);
+                    },
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <div id="login_box" class="box">
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+                </ul>
+            {% endif %}
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="button is-link">Login</button>
+            </form>
+        </div>
+    </body>
+</html>

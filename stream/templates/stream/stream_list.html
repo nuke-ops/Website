@@ -1,0 +1,35 @@
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Streams list</title>
+        <meta charset="utf-8">
+        <meta name="description" content="The nuke-ops stream platform" />
+        <meta name="keywords" content="Stream list" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static "shared/images/nstrat.ico" %}">
+        <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
+        {% compress css %}
+            <link type="text/x-scss"
+                  href="{% static 'stream/scss/stream.scss' %}"
+                  rel="stylesheet"
+                  media="screen">
+        {% endcompress %}
+    </head>
+    <body>
+        <div id="stream_list" class="box">
+            <h2>Available Streams:</h2>
+            <ul>
+                {% for stream in streams %}
+                    <li>
+                        <strong>{{ stream.title }}</strong> -
+                        <a href="{% url 'stream_detail' stream.id %}">Watch Stream</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <br />
+            <a id="create_stream" href="{% url 'create_stream' %}">Create a new stream</a>
+        </div>
+    </body>
+</html>

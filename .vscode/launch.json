@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Python: run server",
+            "type": "python",
+            "request": "launch",
+            "program": "manage.py",
+            "console": "integratedTerminal",
+            "args": [
+                "runserver"
+            ]
+        },
+    ]
+}
