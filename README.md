@@ -1,4 +1,7 @@
 # nukeops.com
+[![CodeQL](https://github.com/nuke-ops/Website/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/nuke-ops/Website/actions/workflows/codeql-analysis.yml)
+[![Django CI](https://github.com/nuke-ops/Website/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/nuke-ops/Website/actions/workflows/django.yml)
+
 ~~Absolute mess~~ Website made for NukeOps guild
 ~~I promise, one day I'll make it look like actual webside instead of some html playground~~  
 
