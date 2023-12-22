@@ -13,9 +13,10 @@ python -m venv .venv
 
 # Windows
 ".\.venv\Scripts\activate.bat"
-
 # Linux
 source .venv/bin/activate
+
+pip install requirements.txt
 ```
 ## run
 #### Debug
