@@ -20,7 +20,7 @@ from django.urls import include, path, re_path
 from django.views.static import serve
 
 from auth_app.views import user_login
-from error_handlers.views import error_handler
+from error_handlers.views import error_400, error_403, error_404, error_500
 
 from .settings import MEDIA_ROOT
 from .views import media_access
@@ -37,7 +37,7 @@ urlpatterns = [
     path("", include("stream.urls")),
 ]
 
-handler400 = error_handler
-handler403 = error_handler
-handler404 = error_handler
-handler500 = error_handler
+handler400 = error_400
+handler403 = error_403
+handler404 = error_404
+handler500 = error_500
