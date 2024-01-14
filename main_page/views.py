@@ -17,4 +17,4 @@ def main_ss13_rules(request):
 
 @xframe_options_exempt
 def main_ss13_motd(request):
-    return render(request, "main/ss13_MOTD.html")
+    return render(request, "main/ss13_motd.html")

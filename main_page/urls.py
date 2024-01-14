@@ -6,5 +6,5 @@ urlpatterns = [
     path("", main, name="main"),
     path("ss13/", main_ss13, name="main_ss13"),
     path("ss13/rules/", main_ss13_rules, name="main_ss13_rules"),
-    path("ss13/MOTD/", main_ss13_motd, name="main_ss13_motd"),
+    path("ss13/motd/", main_ss13_motd, name="main_ss13_motd"),
 ]
