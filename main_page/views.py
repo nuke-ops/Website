@@ -10,7 +10,6 @@ def main_ss13(request):
     return render(request, "main/ss13.html")
 
 
-@xframe_options_exempt
 def main_ss13_rules(request):
     return render(request, "main/rules.html")
 
@@ -18,3 +17,8 @@ def main_ss13_rules(request):
 @xframe_options_exempt
 def main_ss13_motd(request):
     return render(request, "main/ss13_motd.html")
+
+
+@xframe_options_exempt
+def main_ss13_motd_rules(request):
+    return render(request, "main/rules_motd.html")
