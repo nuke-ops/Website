@@ -59,6 +59,17 @@ body {
 .Middle {
     grid-area: Middle;
     display: flex;
+
+    .leftSide {
+        flex: 1;
+        margin-right: 10px;
+        border-right: 1px solid #ccc;
+        padding-right: 10px;
+    }
+
+    .rightSide {
+        flex: 1;
+    }
 }
 
 .Right {
@@ -67,11 +78,17 @@ body {
 
 .Bottom {
     grid-area: Bottom;
+    height: 90%;
+    position: sticky;
 }
 
 .radio-tile-group .input-container {
     position: sticky;
     height: 4rem;
+
+    input {
+        border: none;
+    }
 }
 
 #table_div {
@@ -79,6 +96,11 @@ body {
     overflow-y: auto;
 }
 
+#json_table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    font-size: 12px
+}
 
 input::placeholder {
     color: rgba(63, 61, 61, 0.651) !important;
