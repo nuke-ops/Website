@@ -33,7 +33,6 @@ function load_cookies() {
     if (userData) {
         userData = JSON.parse(userData);
         $("#name").val(userData.name);
-        $("#dark-mode_button")[0].checked = userData.dark_theme;
         $("#cus_input").val(userData.cus);
         $("#str_input").val(userData.str);
         $("#dex_input").val(userData.dex);
@@ -41,6 +40,10 @@ function load_cookies() {
         $("#int_input").val(userData.int);
         $("#wis_input").val(userData.wis);
         $("#cha_input").val(userData.cha);
+        let darkModeButton = $("#dark-mode_button");
+        if (darkModeButton.length > 0) {
+            darkModeButton[0].checked = userData.dark_theme;
+        }
     }
 }
 
