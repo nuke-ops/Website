@@ -3,11 +3,17 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'dice/**'
+      - 'nukeops/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'dice/**'
+      - 'nukeops/**'
 
 jobs:
-  build:
+  Tests:
 
     runs-on: ubuntu-latest
     strategy:
