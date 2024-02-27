@@ -1,25 +1,19 @@
-{% extends "main/main_template.html" %}
+{% extends "main/motd/main_template.html" %}
 {% block title %}
     SS13
 {% endblock title %}
 {% block content %}
     <div class="button-grid">
-        <a href="{% url 'main' %}">
-            <button class="redirect-button" id="neon">
-                <i>BACK</i>
-            </button>
-        </a>
-        <a href="{% url 'main_ss13_rules' %}">
+        <a href="{% url 'main_ss13_motd_rules' %}">
             <button id="neon">
                 <i>RULES</i>
             </button>
         </a>
-        <a href="byond://ss13.nukeops.com:1337">
-            <button id="neon">
-                <i>SERVER</i>
+        <a href="https://discord.gg/bxgeRPq">
+            <button class="redirect-button" id="neon">
+                <i>DISCORD</i>
             </button>
         </a>
-        <!-- <a href="https://nukeops.com/ss13/wiki"> <button id="neon"><i>WIKI</i></button></a> -->
         <a href="https://github.com/nuke-ops/Nostra-13">
             <button id="neon">
                 <i>GITHUB</i>

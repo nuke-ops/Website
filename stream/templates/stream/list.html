@@ -24,12 +24,12 @@
                 {% for stream in streams %}
                     <li>
                         <strong>{{ stream.title }}</strong> -
-                        <a href="{% url 'stream_detail' stream.id %}">Watch Stream</a>
+                        <a href="{% url 'stream_watch' stream.id %}">Watch Stream</a>
                     </li>
                 {% endfor %}
             </ul>
             <br />
-            <a id="create_stream" href="{% url 'create_stream' %}">Create a new stream</a>
+            <a id="stream_create" href="{% url 'stream_create' %}">Create a new stream</a>
         </div>
     </body>
 </html>

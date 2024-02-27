@@ -3,11 +3,17 @@ name: Django CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'dice/**'
+      - 'nukeops/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'dice/**'
+      - 'nukeops/**'
 
 jobs:
-  build:
+  Tests:
 
     runs-on: ubuntu-latest
     strategy:
@@ -31,7 +37,6 @@ jobs:
     - name: Run Test - (Dice) insert_dice_roll
       run: |
         python manage.py test dice.tests.DiceTestCase.test_insert_dice_roll_api
-
     - name: Run Test - (Dice) get_dice_rolls
       run: |
         python manage.py test dice.tests.DiceTestCase.test_get_dice_rolls_api

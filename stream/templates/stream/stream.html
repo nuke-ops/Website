@@ -1,0 +1,57 @@
+{% load static %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{ stream.title }}</title>
+        <meta charset="utf-8">
+        <meta name="description" content="stream platform" />
+        <meta name="keywords" content="Stream" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static "shared/images/nstrat.ico" %}">
+        <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
+        {% compress css %}
+            <link type="text/x-scss"
+                  href="{% static 'stream/scss/stream.scss' %}"
+                  rel="stylesheet"
+                  media="screen">
+        {% endcompress %}
+        <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="content">
+            <div id="corner_box" class="box">
+                <a href="{% url 'stream_list' %}">
+                    <button class="button is-dark is-fullwidth">Back</button>
+                </a>
+                {% if not stream.authorization_required or user.is_authenticated %}
+                    <h2 class="title is-6">Stream: {{ stream.title }}</h2>
+                {% else %}
+                    <p>
+                        You need to be logged in to watch this stream. <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                    </p>
+                {% endif %}
+            </div>
+            {% if not stream.authorization_required or user.is_authenticated %}
+                <div id="playerDiv">
+                    <video id="hlsPlayer"
+                           class="video-js"
+                           controls
+                           preload="auto"
+                           width="1280"
+                           height="720"
+                           data-setup="{}">
+                        <source src="https://nukeops.com/media/protected/hls/{{ stream.title|urlencode }}/index.m3u8"
+                                type="application/x-mpegURL" />
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a
+                            web browser that
+                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
+                    </video>
+                    <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+                </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

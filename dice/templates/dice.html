@@ -1,220 +1,272 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-
-<head>
-    <title>Dice</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'shared/images/nstrat.ico' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-
-    <script src="{% static 'dice/js/math.js' %}"></script>
-    <script src="{% static 'dice/js/dice.js' %}"></script>
-    <script src="{% static 'shared/js/nukeops.js' %}"></script>
-
-    <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
-    <link rel="stylesheet" href="{% static 'dice/css/radio.css' %}">
-    <link rel="stylesheet" href="{% static 'dice/css/dice.css' %}">
-    <link rel="stylesheet" href="{% static 'shared/css/fontawesome_icons.css' %}">
-
-</head>
-<div id="dark-mode"></div>
-
-<body>
-    <div class="container">
-
-        <!-- TOP LEFT BOX -->
-        <div class="Top-left box">
-            <form method="post" id="dice_form" onsubmit="return false;">
-                {% csrf_token %}
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        {{ form.name }}
+<html lang="en">
+    <head>
+        <title>Dice</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Dice" />
+        <meta name="keywords" content="Dice" />
+        <link rel="icon"
+              type="image/x-icon"
+              href="{% static 'shared/images/nstrat.ico' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+        <script src="{% static 'dice/js/math.js' %}"></script>
+        <script src="{% static 'dice/js/dice.js' %}"></script>
+        <script src="{% static 'shared/js/nukeops.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
+        <link rel="stylesheet" href="{% static 'dice/css/radio.css' %}">
+        <link rel="stylesheet" href="{% static 'dice/css/dice.css' %}">
+        <link rel="stylesheet"
+              href="{% static 'shared/css/fontawesome_icons.css' %}">
+    </head>
+    <div id="dark-mode"></div>
+    <body>
+        <div class="container">
+            <!-- TOP LEFT BOX -->
+            <div class="Top-left box">
+                <form method="post" id="dice_form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="field has-addons">
+                        <div class="control is-expanded">{{ form.name }}</div>
+                        <div class="control">
+                            <button id="formSubmit"
+                                    class="button is-primary"
+                                    type="submit"
+                                    onclick="sendDiceRoll(event);save_cookies();">
+                                Roll &nbsp;
+                                <i class="fa-solid fa-dice-d20"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal has-addons">
+                        <div class="control">{{ form.dice }}</div>
+                        <div class="control">{{ form.sides }}</div>
+                    </div>
+                </form>
+                <!-- preset dice buttons -->
+                <div class="field is-horizontal has-addons" id="presetButtonDiv">
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,20);">1d20</button>
                     </div>
                     <div class="control">
-                        <button id="formSubmit" class="button is-primary" type="submit"
-                            onclick="sendDiceRoll(event);save_cookies();">
-                            Roll &nbsp;<i class="fa-solid fa-dice-d20"></i>
-                        </button>
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,4);">1d4</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,6);">1d6</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,8);">1d8</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,10);">1d10</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,12);">1d12</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-rounded is-small is-fullwidth"
+                                id="presetButton"
+                                onclick="set_dice_values(1,100);">1d100</button>
                     </div>
                 </div>
-                <div class="field is-horizontal has-addons">
-                    <div class="control">
-                        {{ form.dice }}
-                    </div>
-                    <div class="control">
-                        {{ form.sides }}
-                    </div>
-                </div>
-            </form>
-
-            <!-- preset dice buttons -->
-            <div class="field is-horizontal has-addons" id="presetButtonDiv">
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,20);">1d20</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,4);">1d4</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,6);">1d6</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,8);">1d8</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,10);">1d10</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,12);">1d12</button></div>
-                <div class="control"><button class="button is-link is-rounded is-small is-fullwidth" id="presetButton"
-                        onclick="set_dice_values(1,100);">1d100</button></div>
+                <!-- errors -->
+                <article class="message is-danger">
+                    <div id="formErrorHead"></div>
+                    <div id="formErrorBody"></div>
+                </article>
             </div>
-
-            <!-- errors -->
-            <article class="message is-danger">
-                <div id="formErrorHead"></div>
-                <div id="formErrorBody"></div>
-            </article>
-        </div>
-
-        <!-- TOP RIGHT BOX -->
-        <div class="Top-right box">
-            <button class="button is-link is-rounded is-small is-fullwidth" onclick="updateMbs();">MBS
-                &nbsp;<i class="fa-solid fa-wheelchair-move"></i></button>
-            <div class="content box">
-                <p id="mbs_textbox"></p>
-            </div>
-        </div>
-
-        <!-- TOP BOX -->
-        <div class="Top box">
-            <form id="calculator_form" method="post" onSubmit="return false;">
-
-                <div class="control is-expanded">
-                    <input id="calculator_input" class="input is-primary" type="text" placeholder="function">
-                </div>
-                <div class="field has-addons">
-                    <button class="button is-primary is-outlined is-fullwidth" onclick="calc();"
-                        id="calculator_button"><i class="fa-solid fa-calculator"></i></button>
-                    <button class="button is-info is-outlined" style="gap: -100px !important;"
-                        onclick="copyToClipboard('calculator_input','calcError',2000);"><i
-                            class="fa-solid fa-copy"></i></button>
-                    <button class="button is-danger is-outlined" onclick="$('#calculator_input').val('')"><i
-                            class="fa-solid fa-eraser"></i></button>
-                    <div class="control">
-                        <button class="button is-outlined is-primary"
-                            onclick="window.open('https:\/\/mathjs.org/docs/expressions/parsing.html','_blank')">&nbsp;<i
-                                class="fa-solid fa-file-lines"></i></button>
-                    </div>
-                </div>
-                <div id="calcError" hidden>
-                    <h1>Successfully copied to clipboard!</h1>
-                </div>
-            </form>
-        </div>
-
-        <!-- BOTTOM BOX -->
-        <div class="Bottom box">
-        </div>
-
-        <!-- BOTTOM RIGHT BOX -->
-        <div class="Bottom-right box">
-            <div class="field has-addons">
-                <button id="clearButton" class="button is-dark is-medium is-fullwidth" onclick="deleteAllCookies();"
-                    onmouseover="$('#clearButton').addClass('is-danger');"
-                    onmouseleave="$('#clearButton').removeClass('is-danger');">
-                    Clear cookies
+            <!-- TOP RIGHT BOX -->
+            <div class="Top-right box">
+                <button class="button is-link is-rounded is-small is-fullwidth"
+                        onclick="updateMbs();">
+                    MBS
+                    &nbsp;<i class="fa-solid fa-wheelchair-move"></i>
                 </button>
-                &nbsp;&nbsp;
-                <label id="dark-mode_label" class="button is-medium is-dark is-outlined"><i
-                        class="fa-solid fa-circle-half-stroke"></i>
-                    <input id="dark-mode_button" type="checkbox" onclick="dark_mode();save_cookies();">
-                </label>
-            </div>
-        </div>
-
-        <!-- RIGHT BOX -->
-        <div class="Right box">
-            <h1 class="is-size-3 has-text-weight-bold is-family-sans-serif">Modifiers</h1>
-            <div class="radio-tile-group">
-                <div class="input-container">
-                    <input id="non_radio" class="radio-button" type="radio" name="mod" checked />
-                    <div class="radio-tile">
-                        <label class="radio-tile-label">None</label>
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="cus_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Custom
-                        <input id="cus_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Custom">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="str_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Strength
-                        <input id="str_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Strength">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="dex_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Dexterity
-                        <input id="dex_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Dexterity">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="con_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Constitution
-                        <input id="con_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Constitution">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="int_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Intelligence
-                        <input id="int_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Intelligence">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="wis_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Wisdom
-                        <input id="wis_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Wisdom">
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input id="cha_radio" class="radio-button" type="radio" name="mod" />
-                    <div class="radio-tile">Charisma
-                        <input id="cha_input" style="border: none;" class="input is-primary" type="number"
-                            placeholder="Charisma">
-                    </div>
+                <div class="content box">
+                    <p id="mbs_textbox"></p>
                 </div>
             </div>
-        </div>
-
-        <!-- MIDDLE -->
-        <div class="Middle box" style="margin-bottom:10px;margin-top:-10px;">
-            <div id="table_div">
-                <table id="json_table" class="table is-narrow is-hoverable is-fullwidth"
-                    style="table-layout:fixed;word-wrap:break-word;">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Dice</th>
-                            <th>Sides</th>
-                            <th>Throws</th>
-                            <th>Modifier</th>
-                            <th>Sum</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <!-- TOP BOX -->
+            <div class="Top box">
+                <form id="calculator_form" method="post" onSubmit="return false;">
+                    <div class="control is-expanded">
+                        <input id="calculator_input"
+                               class="input is-primary"
+                               type="text"
+                               placeholder="function">
+                    </div>
+                    <div class="field has-addons">
+                        <button class="button is-primary is-outlined is-fullwidth"
+                                onclick="calc();"
+                                id="calculator_button">
+                            <i class="fa-solid fa-calculator"></i>
+                        </button>
+                        <button class="button is-info is-outlined"
+                                style="gap: -100px !important"
+                                onclick="copyToClipboard('calculator_input','calcError',2000);">
+                            <i class="fa-solid fa-copy"></i>
+                        </button>
+                        <button class="button is-danger is-outlined"
+                                onclick="$('#calculator_input').val('')">
+                            <i class="fa-solid fa-eraser"></i>
+                        </button>
+                        <div class="control">
+                            <button class="button is-outlined is-primary"
+                                    onclick="window.open('https:\/\/mathjs.org/docs/expressions/parsing.html','_blank')">
+                                &nbsp;<i class="fa-solid fa-file-lines"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="calcError" hidden>
+                        <h1>Successfully copied to clipboard!</h1>
+                    </div>
+                </form>
+            </div>
+            <!-- BOTTOM BOX -->
+            <div class="Bottom box"></div>
+            <!-- BOTTOM RIGHT BOX -->
+            <div class="Bottom-right box">
+                <div class="field has-addons">
+                    <button id="clearButton"
+                            class="button is-dark is-medium is-fullwidth"
+                            onclick="deleteAllCookies();"
+                            onmouseover="$('#clearButton').addClass('is-danger');"
+                            onmouseleave="$('#clearButton').removeClass('is-danger');">Clear cookies</button>
+                    &nbsp;&nbsp;
+                    <label id="dark-mode_label" class="button is-medium is-dark is-outlined">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                        <input id="dark-mode_button"
+                               type="checkbox"
+                               onclick="dark_mode();save_cookies();">
+                    </label>
+                </div>
+            </div>
+            <!-- RIGHT BOX -->
+            <div class="Right box">
+                <h1 class="is-size-3 has-text-weight-bold is-family-sans-serif">Modifiers</h1>
+                <div class="radio-tile-group">
+                    <div class="input-container">
+                        <input id="non_radio" class="radio-button" type="radio" name="mod" checked />
+                        <div class="radio-tile">
+                            <label class="radio-tile-label">None</label>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="cus_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Custom
+                            <input id="cus_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Custom">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="str_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Strength
+                            <input id="str_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Strength">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="dex_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Dexterity
+                            <input id="dex_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Dexterity">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="con_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Constitution
+                            <input id="con_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Constitution">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="int_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Intelligence
+                            <input id="int_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Intelligence">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="wis_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Wisdom
+                            <input id="wis_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Wisdom">
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="cha_radio" class="radio-button" type="radio" name="mod" />
+                        <div class="radio-tile">
+                            Charisma
+                            <input id="cha_input"
+                                   style="border: none"
+                                   class="input is-primary"
+                                   type="number"
+                                   placeholder="Charisma">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MIDDLE -->
+            <div class="Middle box" style="margin-bottom:10px;margin-top:-10px;">
+                <div id="table_div">
+                    <table id="json_table"
+                           class="table is-narrow is-hoverable is-fullwidth"
+                           style="table-layout:fixed;
+                                  word-wrap:break-word">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Dice</th>
+                                <th>Sides</th>
+                                <th>Throws</th>
+                                <th>Modifier</th>
+                                <th>Sum</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

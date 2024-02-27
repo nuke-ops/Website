@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 
 def main(request):
@@ -11,3 +12,13 @@ def main_ss13(request):
 
 def main_ss13_rules(request):
     return render(request, "main/rules.html")
+
+
+@xframe_options_exempt
+def main_ss13_motd(request):
+    return render(request, "main/motd/ss13.html")
+
+
+@xframe_options_exempt
+def main_ss13_motd_rules(request):
+    return render(request, "main/motd/rules.html")
