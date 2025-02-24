@@ -6,6 +6,17 @@
 ~~I promise, one day I'll make it look like actual webside instead of some html playground~~  
 
 
+## Apps
+
+| App                                             | Desc                                                                                  |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [main_page](https://nukeops.com)                | Community info Page                                                                   |
+| [dice](https://nukeops.com/dice)                | D&D focused dice roller                                                               |
+| [stream](https://nukeops.com/stream)            | Bootleg stream platform                                                               |
+| [auth_app](https://nukeops.com/login)           | Authentication system <br> using default django auth model (for now, question mark)   |
+| [error_handlers](https://nukeops.com/whatever)  | Error handlers                                                                        |
+
+
 ## How to setup
 ##### Make an env and install requirements
 ```bash
@@ -27,14 +38,4 @@ python manage.py runserver
 ```
 python -O -m daphne nukeops.asgi:application
 ```
-
-## Apps
-
-| App                                             | Desc                                                                                  |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [main_page](https://nukeops.com)                | Main Page                                                                             |
-| [dice](https://nukeops.com/dice)                | D&D focused dice roller                                                               |
-| [stream](https://nukeops.com/stream)            | Bootleg stream platform                                                               |
-| [auth_app](https://nukeops.com/login)           | Authentication system <br> using default django auth model (for now, question mark)   |
-| [error_handlers](https://nukeops.com/whatever)  | Error handlers                                                                        |
 
