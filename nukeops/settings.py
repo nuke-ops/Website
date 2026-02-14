@@ -180,3 +180,10 @@ STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
 ]
 COMPRESS_ROOT = STATIC_ROOT if conf["static_path"] else "static/"
+
+try:
+    from ops.overwrite import app_overwrite
+
+    INSTALLED_APPS = app_overwrite(INSTALLED_APPS)
+except ImportError:
+    pass

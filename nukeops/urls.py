@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf.urls import handler404, handler500
 from django.contrib import admin
 from django.urls import include, path, re_path
@@ -41,3 +42,10 @@ handler400 = error_400
 handler403 = error_403
 handler404 = error_404
 handler500 = error_500
+
+try:
+    from ops.overwrite import urls_overwrite
+
+    urlpatterns = urls_overwrite(urlpatterns)
+except ImportError:
+    pass
