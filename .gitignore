@@ -18,3 +18,5 @@ __pycache__/
 config.json
 *.log
 /ops/*
+/static/ops/*
+

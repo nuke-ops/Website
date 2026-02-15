@@ -15,13 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf.urls import handler404, handler500
+# from django.conf.urls import handler404, handler500
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
 from auth_app.views import user_login
-from error_handlers.views import error_400, error_403, error_404, error_500
+from error_handlers.views import error_400, error_401, error_403, error_404, error_500
 
 from .settings import MEDIA_ROOT
 from .views import media_access
@@ -39,6 +39,7 @@ urlpatterns = [
 ]
 
 handler400 = error_400
+handler401 = error_401
 handler403 = error_403
 handler404 = error_404
 handler500 = error_500

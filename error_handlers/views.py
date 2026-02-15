@@ -12,6 +12,17 @@ def error_400(request, exception):
     )
 
 
+def error_401(request, exception):
+    status_code = 401
+    message = "UNAUTHORIZED"
+    return render(
+        request,
+        "error.html",
+        {"status_code": " ".join(str(status_code)), "message": message},
+        status=status_code,
+    )
+
+
 def error_403(request, exception):
     status_code = 403
     message = "PERMISSION DENIED"
