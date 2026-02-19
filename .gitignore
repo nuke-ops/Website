@@ -11,9 +11,13 @@ __pycache__/
 .venv/
 
 # app
+/secrets.json
 /static/CACHE/
 /media/*
 !/media/robots.txt
 !/media/sitemap.xml
 config.json
 *.log
+/ops/*
+/static/ops/*
+
