@@ -187,3 +187,17 @@ try:
     INSTALLED_APPS = app_overwrite(INSTALLED_APPS)
 except ImportError:
     pass
+
+# Secrets
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRETS_FILE = BASE_DIR / "secrets.json"
+
+if SECRETS_FILE.exists():
+    with open(SECRETS_FILE) as f:
+        secrets = json.load(f)
+else:
+    secrets = {}
+
+CLOUDFLARE_TURNSTILE_SITE_KEY = secrets.get("TURNSTILE_SITE_KEY", "")
+CLOUDFLARE_TURNSTILE_SECRET_KEY = secrets.get("TURNSTILE_SECRET_KEY", "")

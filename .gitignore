@@ -11,6 +11,7 @@ __pycache__/
 .venv/
 
 # app
+/secrets.json
 /static/CACHE/
 /media/*
 !/media/robots.txt

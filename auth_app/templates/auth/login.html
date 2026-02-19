@@ -10,18 +10,6 @@
         <link rel="icon" href="{% static "shared/images/nstrat.ico" %}">
         <link rel="stylesheet" href="{% static 'shared/css/bulma.css' %}">
         <link rel="stylesheet" href="{% static 'auth_app/css/login.css' %}">
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
-                defer></script>
-        <script>
-            window.onloadTurnstileCallback = function () {
-                turnstile.render("#login_box", {
-                    sitekey: "0x4AAAAAAAOs7enSVbUYlAD-",
-                    callback: function(token) {
-                        console.log(`Challenge Success ${token}`);
-                    },
-                });
-            };
-        </script>
     </head>
     <body>
         <div id="login_box" class="box">
@@ -33,8 +21,11 @@
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 {{ form }}
-                <button type="submit" class="button is-link">Login</button>
-            </form>
-        </div>
-    </body>
+            </br>
+            <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}"></div>
+            <button type="submit" class="button is-link">Login</button>
+        </form>
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+    </div>
+</body>
 </html>
