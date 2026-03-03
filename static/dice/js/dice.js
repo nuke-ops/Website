@@ -104,6 +104,7 @@ function updateTable() {
             tableBody.innerHTML = "";
             sortedData.forEach(record => {
                 const row = tableBody.insertRow();
+                row.classList.add('table_row');
                 row.innerHTML = `
                     <td>${record.name}</td>
                     <td>${record.dice}</td>
@@ -120,13 +121,13 @@ function updateTable() {
 
 function formatDate(dateTimeString) {
     const originalDate = new Date(dateTimeString);
-    const formattedDate = originalDate.toLocaleDateString('en-US', {
+    const formattedDate = originalDate.toLocaleDateString('en-GB', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     });
 
-    const formattedTime = originalDate.toLocaleTimeString('en-US', {
+    const formattedTime = originalDate.toLocaleTimeString('en-GB', {
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric',

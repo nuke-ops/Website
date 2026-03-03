@@ -108,3 +108,15 @@ th:nth-child(7),
 td:nth-child(7) {
 	text-align: right !important;
 }
+
+/* Die table animation */
+
+@keyframes slideDownFade {
+	from {
+		transform: translateX(-30px);
+	}
+}
+
+.table_row {
+	animation: slideDownFade 0.1s ease-out;
+}
